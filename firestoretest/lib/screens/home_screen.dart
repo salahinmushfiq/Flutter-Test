@@ -1,6 +1,10 @@
+import 'package:firestoretest/widgets/add_to_cart_bottomsheet.dart';
+import 'package:firestoretest/widgets/filter_bottomsheet.dart';
+import 'package:firestoretest/widgets/productlist_item.dart';
+
 import 'package:flutter/cupertino.dart';
 
-import '/models/cart_item.dart';
+import '/models/product.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,659 +30,433 @@ class _HomeScreenState extends State<HomeScreen> {
   bool best_selling=false;
 
   int _selectedIndex=0;
-  List cart=List.of(<CartItem>{});
-  List availableCartItems=List.of(<CartItem>{});
-  List itemImage=List.of(<AssetImage>{});
-  List coverImage=List.of(<AssetImage>{});
-  List itemCurrPrice=List.of(<double>{});
-  List itemDiscPrice=List.of(<double>{});
-  List itemLabel=List.of(<String>{});
-  List itemRating=List.of(<double>{});
-  CartItem currentlySelectedCartItem=new CartItem();
-  void addToCart(CartItem item) {
+  List cart=List.of(<Product>{});
+
+  List product_list=List.of(<Product>{});
+  List productId=List.of(<int>{});
+  List categoryId=List.of(<int>{});
+  List productImage=List.of(<String>{});
+  List productPrevPrice=List.of(<double>{});
+  List productDiscPrice=List.of(<double>{});
+  List productLabel=List.of(<String>{});
+  List productRating=List.of(<double>{});
+  // Product currentlySelectedProduct=Product();
+  void addToCart(Product product) {
     setState(() {
-      cart.add(item);
+      cart.add(product);
 
     });
   }
   @override
   Widget build(BuildContext context) {
 
-    itemImage.add(const AssetImage("assets/images/products/812_HLSO_KING_PRAWN.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/BONLESS-LEG.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/CHAPILA.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/CHICKEN-FILLET.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/CHICKEN-LEG.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/HLSO_Prawn_Block.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/IBCO-KOI.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/IBCO-NUGGET.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/IBCO-PARATHA.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/IBCO-VEG-SOMUSA.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/IBCO_KESKI_FISH.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/LAMB-BOTI.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/LAMB-MINCE.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/PABDA.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/PRAWN P&D IQF & BLOCK.jpeg"));
-    itemImage.add(const AssetImage("assets/images/products/TENGRA.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/Uby5_HLSO_KING_PRAWN.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/WHOLE-CHICKEN.jpg"));
-    itemImage.add(const AssetImage("assets/images/products/WINGS.pg.jpg"));
+    productImage.add("assets/images/products/productsMen1.jpg");
+    productImage.add("assets/images/products/productsMen2.jpg");
+    productImage.add("assets/images/products/productsMen4.jpg");
+    productImage.add("assets/images/products/productsMen5.jpg");
+    productImage.add("assets/images/products/productsMen6.jpg");
+    productImage.add("assets/images/products/productsMen7.jpg");
+    productImage.add("assets/images/products/productsMen8.jpg");
+    productImage.add("assets/images/products/productsMen9.jpg");
+    productImage.add("assets/images/products/productsMen10.jpg");
+    productImage.add("assets/images/products/productsMen11.jpg");
+    productImage.add("assets/images/products/productsMen12.jpg");
+    productImage.add("assets/images/products/productsWomen1.jpg");
+    productImage.add("assets/images/products/productsWomen2.jpg");
+    productImage.add("assets/images/products/productsWomen3.jpg");
+    productImage.add("assets/images/products/productsWomen4.jpg");
+    productImage.add("assets/images/products/productsWomen5.jpg");
+    productImage.add("assets/images/products/productsWomen6.jpg");
+    productImage.add("assets/images/products/productsWomen7.jpeg");
+    productImage.add("assets/images/products/productsWomen8.jpeg");
+    productImage.add("assets/images/products/productsWomen9.jpg");
 
-    itemLabel.add("812 HLSO KING PRAWN");
-    itemLabel.add("BONLESS-LEG");
-    itemLabel.add("CHAPILA");
-    itemLabel.add("CHICKEN-FILLET");
-    itemLabel.add("CHICKEN-LEG");
-    itemLabel.add("HLSO Prawn BLock");
-    itemLabel.add("IBCO-KOI");
-    itemLabel.add("IBCO-NUGGET");
-    itemLabel.add("IBCO-PARATHA");
-    itemLabel.add("IBCO-VEG-SOMUSA");
-    itemLabel.add("IBCO-KESKI-FISH");
-    itemLabel.add("LAMB-BOTI");
-    itemLabel.add("LAMB-MINCE");
-    itemLabel.add("PABDA");
-    itemLabel.add("TENGRA");
-    itemLabel.add("Uby5-HLSO-KING-PRAWN");
-    itemLabel.add("HLSO KING PRAWN");
-    itemLabel.add("WHOLE CHICKEN");
-    itemLabel.add("WINGS");
+    productLabel.add("Men Shirt 1");
+    productLabel.add("Men Shirt 2");
+    productLabel.add("Men Pant 1");
+    productLabel.add("Men Pant 2");
+    productLabel.add("Men Pant 3");
+    productLabel.add("Men Pant 4");
+    productLabel.add("Men Pant 5");
+    productLabel.add("Men Pant 6");
+    productLabel.add("Men Pant 7");
+    productLabel.add("Men Shoe 1");
+    productLabel.add("Men Shoe 2");
+    productLabel.add("Men Shoe 3");
+    productLabel.add("Women Shirt 1");
+    productLabel.add("Women Shirt 2");
+    productLabel.add("Women Shirt 3");
+    productLabel.add("Women Shirt 4");
+    productLabel.add("Women Shirt 5");
+    productLabel.add("Women Pant 1");
+    productLabel.add("Women Pant 2");
+    productLabel.add("Women Pant 3");
 
+    productId.add(1);
+    productId.add(2);
+    productId.add(3);
+    productId.add(4);
+    productId.add(5);
+    productId.add(6);
+    productId.add(7);
+    productId.add(8);
+    productId.add(9);
+    productId.add(10);
+    productId.add(11);
+    productId.add(12);
+    productId.add(13);
+    productId.add(14);
+    productId.add(15);
+    productId.add(16);
+    productId.add(17);
+    productId.add(18);
+    productId.add(19);
+    productId.add(20);
 
+    categoryId.add(1);
+    categoryId.add(1);
+    categoryId.add(2);
+    categoryId.add(2);
+    categoryId.add(2);
+    categoryId.add(2);
+    categoryId.add(2);
+    categoryId.add(2);
+    categoryId.add(2);
+    categoryId.add(3);
+    categoryId.add(3);
+    categoryId.add(3);
+    categoryId.add(4);
+    categoryId.add(4);
+    categoryId.add(4);
+    categoryId.add(4);
+    categoryId.add(4);
+    categoryId.add(5);
+    categoryId.add(5);
+    categoryId.add(5);
 
-    itemCurrPrice.add(200.0);
-    itemCurrPrice.add(450.0);
-    itemCurrPrice.add(190.0);
-    itemCurrPrice.add(1200.0);
-    itemCurrPrice.add(900.0);
-    itemCurrPrice.add(900.0);
-    itemCurrPrice.add(200.0);
-    itemCurrPrice.add(450.0);
-    itemCurrPrice.add(190.0);
-    itemCurrPrice.add(1200.0);
-    itemCurrPrice.add(900.0);
-    itemCurrPrice.add(900.0);
-    itemCurrPrice.add(200.0);
-    itemCurrPrice.add(450.0);
-    itemCurrPrice.add(190.0);
-    itemCurrPrice.add(1200.0);
-    itemCurrPrice.add(900.0);
-    itemCurrPrice.add(900.0);
-    itemCurrPrice.add(900.0);
-
-
-
-
-    itemDiscPrice.add(190.0);
-    itemDiscPrice.add(420.0);
-    itemDiscPrice.add(180.0);
-    itemDiscPrice.add(200.0);
-    itemDiscPrice.add(200.0);
-    itemDiscPrice.add(200.0);
-    itemDiscPrice.add(190.0);
-    itemDiscPrice.add(420.0);
-    itemDiscPrice.add(180.0);
-    itemDiscPrice.add(200.0);
-    itemDiscPrice.add(200.0);
-    itemDiscPrice.add(200.0);
-    itemDiscPrice.add(190.0);
-    itemDiscPrice.add(420.0);
-    itemDiscPrice.add(180.0);
-    itemDiscPrice.add(200.0);
-    itemDiscPrice.add(200.0);
-    itemDiscPrice.add(200.0);
-    itemDiscPrice.add(200.0);
-
-
-
-    itemRating.add(4.2);
-    itemRating.add(4.5);
-    itemRating.add(4.5);
-    itemRating.add(4.7);
-    itemRating.add(2.5);
-    itemRating.add(5.0);
-    itemRating.add(4.2);
-    itemRating.add(4.5);
-    itemRating.add(4.5);
-    itemRating.add(4.7);
-    itemRating.add(2.5);
-    itemRating.add(5.0);
-    itemRating.add(4.2);
-    itemRating.add(4.5);
-    itemRating.add(4.5);
-    itemRating.add(4.7);
-    itemRating.add(2.5);
-    itemRating.add(5.0);
-    itemRating.add(2.5);
-
-
-    CartItem cartItem1=new CartItem();
-    cartItem1.itemImage=itemImage[0];
-    cartItem1.itemLabel=itemLabel[0];
-    cartItem1.itemRating=itemRating[0];
-    cartItem1.itemCurrPrice=itemCurrPrice[0];
-    cartItem1.itemDiscPrice=itemDiscPrice[0];
-    CartItem cartItem2=new CartItem();
-    cartItem2.itemImage=itemImage[1];
-    cartItem2.itemLabel=itemLabel[1];
-    cartItem2.itemRating=itemRating[1];
-    cartItem2.itemCurrPrice=itemCurrPrice[1];
-    cartItem2.itemDiscPrice=itemDiscPrice[1];
-    CartItem cartItem3=new CartItem();
-    cartItem3.itemImage=itemImage[2];
-    cartItem3.itemLabel=itemLabel[2];
-    cartItem3.itemRating=itemRating[2];
-    cartItem3.itemCurrPrice=itemCurrPrice[2];
-    cartItem3.itemDiscPrice=itemDiscPrice[2];
-    CartItem cartItem4=new CartItem();
-    cartItem4.itemImage=itemImage[3];
-    cartItem4.itemLabel=itemLabel[3];
-    cartItem4.itemRating=itemRating[3];
-    cartItem4.itemCurrPrice=itemCurrPrice[3];
-    cartItem4.itemDiscPrice=itemDiscPrice[3];
-    CartItem cartItem5=new CartItem();
-    cartItem5.itemImage=itemImage[4];
-    cartItem5.itemLabel=itemLabel[4];
-    cartItem5.itemRating=itemRating[4];
-    cartItem5.itemCurrPrice=itemCurrPrice[4];
-    cartItem5.itemDiscPrice=itemDiscPrice[4];
-    CartItem cartItem6=new CartItem();
-    cartItem6.itemImage=itemImage[5];
-    cartItem6.itemLabel=itemLabel[5];
-    cartItem6.itemRating=itemRating[5];
-    cartItem6.itemCurrPrice=itemCurrPrice[5];
-    cartItem6.itemDiscPrice=itemDiscPrice[5];
-    CartItem cartItem7=new CartItem();
-    cartItem7.itemImage=itemImage[6];
-    cartItem7.itemLabel=itemLabel[6];
-    cartItem7.itemRating=itemRating[6];
-    cartItem7.itemCurrPrice=itemCurrPrice[6];
-    cartItem7.itemDiscPrice=itemDiscPrice[6];
-    CartItem cartItem8=new CartItem();
-    cartItem8.itemImage=itemImage[7];
-    cartItem8.itemLabel=itemLabel[7];
-    cartItem8.itemRating=itemRating[7];
-    cartItem8.itemCurrPrice=itemCurrPrice[7];
-    cartItem8.itemDiscPrice=itemDiscPrice[7];
-    CartItem cartItem9=new CartItem();
-    cartItem9.itemImage=itemImage[8];
-    cartItem9.itemLabel=itemLabel[8];
-    cartItem9.itemRating=itemRating[8];
-    cartItem9.itemCurrPrice=itemCurrPrice[8];
-    cartItem9.itemDiscPrice=itemDiscPrice[8];
-    CartItem cartItem10=new CartItem();
-    cartItem10.itemImage=itemImage[9];
-    cartItem10.itemLabel=itemLabel[9];
-    cartItem10.itemRating=itemRating[9];
-    cartItem10.itemCurrPrice=itemCurrPrice[9];
-    cartItem10.itemDiscPrice=itemDiscPrice[9];
-    CartItem cartItem11=new CartItem();
-    cartItem11.itemImage=itemImage[10];
-    cartItem11.itemLabel=itemLabel[10];
-    cartItem11.itemRating=itemRating[10];
-    cartItem11.itemCurrPrice=itemCurrPrice[10];
-    cartItem11.itemDiscPrice=itemDiscPrice[10];
-    CartItem cartItem12=new CartItem();
-    cartItem12.itemImage=itemImage[11];
-    cartItem12.itemLabel=itemLabel[11];
-    cartItem12.itemRating=itemRating[11];
-    cartItem12.itemCurrPrice=itemCurrPrice[11];
-    cartItem12.itemDiscPrice=itemDiscPrice[11];
-    CartItem cartItem13=new CartItem();
-    cartItem13.itemImage=itemImage[12];
-    cartItem13.itemLabel=itemLabel[12];
-    cartItem13.itemRating=itemRating[12];
-    cartItem13.itemCurrPrice=itemCurrPrice[12];
-    cartItem13.itemDiscPrice=itemDiscPrice[12];
-    CartItem cartItem14=new CartItem();
-    cartItem14.itemImage=itemImage[13];
-    cartItem14.itemLabel=itemLabel[13];
-    cartItem14.itemRating=itemRating[13];
-    cartItem14.itemCurrPrice=itemCurrPrice[13];
-    cartItem14.itemDiscPrice=itemDiscPrice[13];
-    CartItem cartItem15=new CartItem();
-    cartItem15.itemImage=itemImage[14];
-    cartItem15.itemLabel=itemLabel[14];
-    cartItem15.itemRating=itemRating[14];
-    cartItem15.itemCurrPrice=itemCurrPrice[14];
-    cartItem15.itemDiscPrice=itemDiscPrice[14];
-    CartItem cartItem16=new CartItem();
-    cartItem16.itemImage=itemImage[15];
-    cartItem16.itemLabel=itemLabel[15];
-    cartItem16.itemRating=itemRating[15];
-    cartItem16.itemCurrPrice=itemCurrPrice[15];
-    cartItem16.itemDiscPrice=itemDiscPrice[15];
-    CartItem cartItem17=new CartItem();
-    cartItem17.itemImage=itemImage[16];
-    cartItem17.itemLabel=itemLabel[16];
-    cartItem17.itemRating=itemRating[16];
-    cartItem17.itemCurrPrice=itemCurrPrice[16];
-    cartItem17.itemDiscPrice=itemDiscPrice[16];
-    CartItem cartItem18=new CartItem();
-    cartItem18.itemImage=itemImage[17];
-    cartItem18.itemLabel=itemLabel[17];
-    cartItem18.itemRating=itemRating[17];
-    cartItem18.itemCurrPrice=itemCurrPrice[17];
-    cartItem18.itemDiscPrice=itemDiscPrice[17];
-    CartItem cartItem19=new CartItem();
-    cartItem19.itemImage=itemImage[18];
-    cartItem19.itemLabel=itemLabel[18];
-    cartItem19.itemRating=itemRating[18];
-    cartItem19.itemCurrPrice=itemCurrPrice[18];
-    cartItem19.itemDiscPrice=itemDiscPrice[18];
-    // CartItem cartItem20=new CartItem();
-    // cartItem6.itemImage=itemImage[19];
-    // cartItem6.itemLabel=itemLabel[19];
-    // cartItem6.itemRating=itemLabel[19];
-    // cartItem6.itemCurrPrice=itemCurrPrice[19];
-    // cartItem6.itemDiscPrice=itemDiscPrice[19];
-    availableCartItems.add(cartItem1);
-    availableCartItems.add(cartItem2);
-    availableCartItems.add(cartItem3);
-    availableCartItems.add(cartItem4);
-    availableCartItems.add(cartItem5);
-    availableCartItems.add(cartItem6);
-    availableCartItems.add(cartItem7);
-    availableCartItems.add(cartItem8);
-    availableCartItems.add(cartItem9);
-    availableCartItems.add(cartItem10);
-    availableCartItems.add(cartItem11);
-    availableCartItems.add(cartItem12);
-    availableCartItems.add(cartItem13);
-    availableCartItems.add(cartItem14);
-    availableCartItems.add(cartItem15);
-    availableCartItems.add(cartItem16);
-    availableCartItems.add(cartItem17);
-    availableCartItems.add(cartItem18);
-    availableCartItems.add(cartItem19);
+    productPrevPrice.add(200.0);
+    productPrevPrice.add(450.0);
+    productPrevPrice.add(190.0);
+    productPrevPrice.add(1200.0);
+    productPrevPrice.add(900.0);
+    productPrevPrice.add(900.0);
+    productPrevPrice.add(200.0);
+    productPrevPrice.add(450.0);
+    productPrevPrice.add(190.0);
+    productPrevPrice.add(1200.0);
+    productPrevPrice.add(900.0);
+    productPrevPrice.add(900.0);
+    productPrevPrice.add(200.0);
+    productPrevPrice.add(450.0);
+    productPrevPrice.add(190.0);
+    productPrevPrice.add(1200.0);
+    productPrevPrice.add(900.0);
+    productPrevPrice.add(900.0);
+    productPrevPrice.add(900.0);
+    productPrevPrice.add(900.0);
 
 
 
+    productDiscPrice.add(190.0);
+    productDiscPrice.add(420.0);
+    productDiscPrice.add(180.0);
+    productDiscPrice.add(200.0);
+    productDiscPrice.add(200.0);
+    productDiscPrice.add(200.0);
+    productDiscPrice.add(190.0);
+    productDiscPrice.add(420.0);
+    productDiscPrice.add(180.0);
+    productDiscPrice.add(200.0);
+    productDiscPrice.add(200.0);
+    productDiscPrice.add(200.0);
+    productDiscPrice.add(190.0);
+    productDiscPrice.add(420.0);
+    productDiscPrice.add(180.0);
+    productDiscPrice.add(200.0);
+    productDiscPrice.add(200.0);
+    productDiscPrice.add(200.0);
+    productDiscPrice.add(200.0);
+    productDiscPrice.add(200.0);
 
-    int length= (itemLabel.length*.5).toInt();
+
+    productRating.add(4.2);
+    productRating.add(4.5);
+    productRating.add(4.5);
+    productRating.add(4.7);
+    productRating.add(2.5);
+    productRating.add(5.0);
+    productRating.add(4.2);
+    productRating.add(4.5);
+    productRating.add(4.5);
+    productRating.add(4.7);
+    productRating.add(2.5);
+    productRating.add(5.0);
+    productRating.add(4.2);
+    productRating.add(4.5);
+    productRating.add(4.5);
+    productRating.add(4.7);
+    productRating.add(2.5);
+    productRating.add(5.0);
+    productRating.add(2.5);
+    productRating.add(2.5);
+
+
+    Product Product1=Product();
+    Product1.productImage=productImage[0];
+    Product1.productLabel=productLabel[0];
+    Product1.productRating=productRating[0];
+    Product1.productPrevPrice=productPrevPrice[0];
+    Product1.productDiscPrice=productDiscPrice[0];
+    Product Product2=Product();
+    Product2.productImage=productImage[1];
+    Product2.productLabel=productLabel[1];
+    Product2.productRating=productRating[1];
+    Product2.productPrevPrice=productPrevPrice[1];
+    Product2.productDiscPrice=productDiscPrice[1];
+    Product Product3=Product();
+    Product3.productImage=productImage[2];
+    Product3.productLabel=productLabel[2];
+    Product3.productRating=productRating[2];
+    Product3.productPrevPrice=productPrevPrice[2];
+    Product3.productDiscPrice=productDiscPrice[2];
+    Product Product4=Product();
+    Product4.productImage=productImage[3];
+    Product4.productLabel=productLabel[3];
+    Product4.productRating=productRating[3];
+    Product4.productPrevPrice=productPrevPrice[3];
+    Product4.productDiscPrice=productDiscPrice[3];
+    Product Product5=Product();
+    Product5.productImage=productImage[4];
+    Product5.productLabel=productLabel[4];
+    Product5.productRating=productRating[4];
+    Product5.productPrevPrice=productPrevPrice[4];
+    Product5.productDiscPrice=productDiscPrice[4];
+    Product Product6=Product();
+    Product6.productImage=productImage[5];
+    Product6.productLabel=productLabel[5];
+    Product6.productRating=productRating[5];
+    Product6.productPrevPrice=productPrevPrice[5];
+    Product6.productDiscPrice=productDiscPrice[5];
+    Product Product7=Product();
+    Product7.productImage=productImage[6];
+    Product7.productLabel=productLabel[6];
+    Product7.productRating=productRating[6];
+    Product7.productPrevPrice=productPrevPrice[6];
+    Product7.productDiscPrice=productDiscPrice[6];
+    Product Product8=Product();
+    Product8.productImage=productImage[7];
+    Product8.productLabel=productLabel[7];
+    Product8.productRating=productRating[7];
+    Product8.productPrevPrice=productPrevPrice[7];
+    Product8.productDiscPrice=productDiscPrice[7];
+    Product Product9=Product();
+    Product9.productImage=productImage[8];
+    Product9.productLabel=productLabel[8];
+    Product9.productRating=productRating[8];
+    Product9.productPrevPrice=productPrevPrice[8];
+    Product9.productDiscPrice=productDiscPrice[8];
+    Product Product10=Product();
+    Product10.productImage=productImage[9];
+    Product10.productLabel=productLabel[9];
+    Product10.productRating=productRating[9];
+    Product10.productPrevPrice=productPrevPrice[9];
+    Product10.productDiscPrice=productDiscPrice[9];
+    Product Product11=Product();
+    Product11.productImage=productImage[10];
+    Product11.productLabel=productLabel[10];
+    Product11.productRating=productRating[10];
+    Product11.productPrevPrice=productPrevPrice[10];
+    Product11.productDiscPrice=productDiscPrice[10];
+    Product Product12=Product();
+    Product12.productImage=productImage[11];
+    Product12.productLabel=productLabel[11];
+    Product12.productRating=productRating[11];
+    Product12.productPrevPrice=productPrevPrice[11];
+    Product12.productDiscPrice=productDiscPrice[11];
+    Product Product13=Product();
+    Product13.productImage=productImage[12];
+    Product13.productLabel=productLabel[12];
+    Product13.productRating=productRating[12];
+    Product13.productPrevPrice=productPrevPrice[12];
+    Product13.productDiscPrice=productDiscPrice[12];
+    Product Product14=Product();
+    Product14.productImage=productImage[13];
+    Product14.productLabel=productLabel[13];
+    Product14.productRating=productRating[13];
+    Product14.productPrevPrice=productPrevPrice[13];
+    Product14.productDiscPrice=productDiscPrice[13];
+    Product Product15=Product();
+    Product15.productImage=productImage[14];
+    Product15.productLabel=productLabel[14];
+    Product15.productRating=productRating[14];
+    Product15.productPrevPrice=productPrevPrice[14];
+    Product15.productDiscPrice=productDiscPrice[14];
+    Product Product16=Product();
+    Product16.productImage=productImage[15];
+    Product16.productLabel=productLabel[15];
+    Product16.productRating=productRating[15];
+    Product16.productPrevPrice=productPrevPrice[15];
+    Product16.productDiscPrice=productDiscPrice[15];
+    Product Product17=Product();
+    Product17.productImage=productImage[16];
+    Product17.productLabel=productLabel[16];
+    Product17.productRating=productRating[16];
+    Product17.productPrevPrice=productPrevPrice[16];
+    Product17.productDiscPrice=productDiscPrice[16];
+    Product Product18=Product();
+    Product18.productImage=productImage[17];
+    Product18.productLabel=productLabel[17];
+    Product18.productRating=productRating[17];
+    Product18.productPrevPrice=productPrevPrice[17];
+    Product18.productDiscPrice=productDiscPrice[17];
+    Product Product19=Product();
+    Product19.productImage=productImage[18];
+    Product19.productLabel=productLabel[18];
+    Product19.productRating=productRating[18];
+    Product19.productPrevPrice=productPrevPrice[18];
+    Product19.productDiscPrice=productDiscPrice[18];
+    Product Product20=Product();
+    Product20.productImage=productImage[19];
+    Product20.productLabel=productLabel[19];
+    Product20.productRating=productRating[19];
+    Product20.productPrevPrice=productPrevPrice[19];
+    Product20.productDiscPrice=productDiscPrice[19];
+    
+    product_list.add(Product1);
+    product_list.add(Product2);
+    product_list.add(Product3);
+    product_list.add(Product4);
+    product_list.add(Product5);
+    product_list.add(Product6);
+    product_list.add(Product7);
+    product_list.add(Product8);
+    product_list.add(Product9);
+    product_list.add(Product10);
+    product_list.add(Product11);
+    product_list.add(Product12);
+    product_list.add(Product13);
+    product_list.add(Product14);
+    product_list.add(Product15);
+    product_list.add(Product16);
+    product_list.add(Product17);
+    product_list.add(Product18);
+    product_list.add(Product19);
+    product_list.add(Product20);
+
+
+
+    int length= (productLabel.length*.5).toInt();
     return Scaffold(
 
       key: _scaffoldKey,
-      drawer:  Drawer(
-        child: Column(
-          children: [
-            Container(
-              alignment: Alignment.topCenter,
-              width: double.infinity,
-              height:150,
-              child: const Image(
-                image: AssetImage("assets/images/profile_pic.png"),
-              ),
-            ),
-            SizedBox(
-              height:380,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        // primary: Colors.deepOrangeAccent,
-                        primary: const Color(0xffF8F8F8),
-                        elevation: 5.0,
 
-                        // side: BorderSide(width: 2.0, color:Color(0xff4465aa),),
-
-                      ),
-                      onPressed: (){},
-                      child: Container(
-
-                        alignment: Alignment.center,
-                        width:double.infinity,
-                        child: const Text("Orders",style: TextStyle(color:Color(0xff4465aa),fontWeight: FontWeight.w800 ),),
-                      ),
-                    ),
-                  ),
-                  // Divider(color: Color(0xff4465aa),thickness: 1,),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        // primary: Colors.deepOrangeAccent,
-                        primary: const Color(0xffF8F8F8),
-                        elevation: 5.0,
-
-                        // side: BorderSide(width: 2.0, color:Color(0xff4465aa),),
-
-
-                      ),
-                      onPressed: (){},
-                      child: Container(
-                        alignment: Alignment.center,
-                        width:double.infinity,
-                        child: const Text("Current Order",style: const TextStyle(color:Color(0xff4465aa),fontWeight: FontWeight.w800 ),),
-                      ),
-                    ),
-                  ),
-                  // Divider(color: Color(0xff4465aa),thickness: 1,),
-                  Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          // primary: Colors.deepOrangeAccent,
-                          primary: const Color(0xffF8F8F8),
-                          elevation: 5.0,
-
-                          // side:const BorderSide(width: 2.0, color:Color(0xff4465aa),)
-
-                        ),
-                        onPressed: (){},
-                        child: Container(
-                            alignment: Alignment.center,
-                            width:double.infinity,
-                            child:const Text("Offers",style: TextStyle(color:Color(0xff4465aa),fontWeight: FontWeight.w800 ),)
-                        ),
-                      )
-                  ),
-                  // const Divider(color: Color(0xff4465aa),thickness: 1,),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        // primary: Colors.deepOrangeAccent,
-                        primary: const Color(0xffF8F8F8),
-                        elevation: 5.0,
-
-                        // side: const BorderSide(width: 2.0, color:Color(0xff4465aa),)
-
-                      ),
-                      onPressed: (){},
-                      child: Container(
-                        alignment: Alignment.center,
-                        width:double.infinity,
-                        child: const Text("Contact",style: TextStyle(color:Color(0xff4465aa),fontWeight: FontWeight.w800 ),),
-                      ),
-                    ),
-                  ),
-                  // Divider(color: Color(0xff4465aa),thickness: 1,),
-                  const SizedBox(height:100),
-
-                ],
-              ),
-            ),
-            Expanded(
-              child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: ElevatedButton(
-
-                  style: ElevatedButton.styleFrom(
-                    // primary: Colors.deepOrangeAccent,
-                      primary: const Color(0xffF8F8F8),
-                      elevation: 5.0,
-
-                      side: const BorderSide(width: 2.0, color:Color(0xff4465aa),)
-
-                  ),
-                  onPressed: (){},
-                  child: const Text("Sign Out",style: TextStyle(color:Color(0xff4465aa),fontWeight: FontWeight.w800 ),),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
       body: SafeArea(
-        child: Container(
+        child:
+        Container(
+          color: Color(0xffe3dbd3),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
             children: [
+
               Container(
 
-                margin: const EdgeInsets.only(left:20,right:20,bottom:0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                     IconButton(onPressed: (){
-                         Scaffold.of(context).openDrawer();
-                       }, icon:const Icon(Icons.menu, color: Color(0xff4465aa),)
-                     ),
+                  margin: const EdgeInsets.only(left:20,right:20,bottom:0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                       IconButton(onPressed: (){
+                           Scaffold.of(context).openDrawer();
+                         }, icon:const Icon(Icons.menu, color: Color(0xffc9a697))
+                       ),
 
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.only(right:40),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            "Product List",
-                            style:
-                            TextStyle(fontSize: 20,color: Color(0xff4465aa),fontWeight: FontWeight.w500),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(right:40),
+                            alignment: Alignment.center,
+                            child:  Text(
+                              "Product List",
+                              style:Theme.of(context).textTheme.headline1,
+                            ),
                           ),
                         ),
-                      ),
 
 
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+
               Container(
                 margin: const EdgeInsets.only(bottom: 10),
                 child: const Divider(
-                  color: const Color(0xff4465aa),
-                  height: 1,
+                  color: Color(0xffc9a697),
+                  height: 2,
+                  thickness: 2,
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.only(left:10,right:10),
-                margin: const EdgeInsets.only(left:20,right:20,bottom:10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: const Color(0xff4465aa),width: 2,),
-                  color: Colors.white,
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintStyle: const TextStyle(color:Colors.grey),
-                    iconColor: const Color(0xff4465aa),
-                    hintText: "Filter",
-                    prefixIcon:  InkWell(
-                      onTap: (){
-                        setState(() {
-                          _showFilterBottomSheet=true;
-                        });
-                      },
-                      child: Container(
-                        width:15,
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(right:0.0),
-                        child: const FaIcon(FontAwesomeIcons.slidersH,size: 15,color: const Color(0xff4465aa)),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  padding: const EdgeInsets.only(left:10,right:10),
+                  margin: const EdgeInsets.only(left:20,right:20,bottom:10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: const Color(0xffc9a697),width: 2,),
+                    color: Color(0xffe3dbd3),
+                  ),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      hintStyle: const TextStyle(color:Colors.grey),
+                      iconColor: const Color(0xffc9a697),
+                      hintText: "Filter",
+                      prefixIcon:  InkWell(
+                        onTap: (){
+                          Scaffold.of(context).showBottomSheet((context) => FilterBottomSheet());
+                          setState(() {
+                            _showFilterBottomSheet=true;
+                          });
+                        },
+                        child: Container(
+                          width:15,
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(right:0.0),
+                          child: const FaIcon(FontAwesomeIcons.slidersH,size: 15,color: const Color(0xffc9a697)),
+                        ),
                       ),
-                    ),
-                    border: InputBorder.none,
-                    suffixIcon: Container(
-                      width: 100,
-                      padding: const EdgeInsets.only(left:4.0),
-                      child: Row(
-                        children: [
-                          const Text("Sort By",style: TextStyle(color:Color(0xff4465aa),)),
-                          const Icon(Icons.arrow_drop_down,size: 22,color: Color(0xff4465aa)),
-                          const Icon(Icons.menu,size: 22,color: const Color(0xff4465aa)),
-                        ],
+                      border: InputBorder.none,
+                      suffixIcon: Container(
+                        width: 100,
+                        padding: const EdgeInsets.only(left:4.0),
+                        child: Row(
+                          children: [
+                            const Text("Sort By",style: TextStyle(color:Color(0xffc9a697),)),
+                            const Icon(Icons.arrow_drop_down,size: 22,color: Color(0xffc9a697)),
+                            const Icon(Icons.menu,size: 22,color: const Color(0xffc9a697)),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              Expanded(
+              Flexible(
+                flex:14,
+                child :Container(
 
-                flex:1,
-                child :Padding(
-                  padding: const EdgeInsets.only(left:14.0,right:14.0,bottom:10),
+                  padding:const EdgeInsets.only(bottom:10),
                   child: GridView.count(
-
                     // Create a grid with 2 columns. If you change the scrollDirection to
                     // horizontal, this produces 2 rows.
                     crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    childAspectRatio: .75,
+                    padding:const EdgeInsets.only(left:14,right:14),
                     // Generate 100 widgets that display their index in the List.
-                    children: List.generate(itemLabel.length, (index) {
-                      return
-
-                        Card(
-                          child: Column(
-                          children: [
-                            Expanded(
-                              flex:1,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left:0.0,right:0.0),
-                                child: Container(
-
-                                  // height:110,
-                                  width:(double.infinity*.5),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-
-                                    image: DecorationImage(
-                                      image: itemImage[index],
-                                      fit: BoxFit.cover,
-                                    ),
-                                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
-
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-
-                                margin: const EdgeInsets.only(top:10),
-                                width:160,
-                                child: Text(itemLabel[index].toString()),
-                              // color: Colors.green,
-                            ),
-                            Container(
-                                  // padding: EdgeInsets.only(top:10),
-                                  width:160,
-                                  // color: Colors.orange,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        child:
-                                        Text(itemDiscPrice[index].toString() ,
-                                            style: TextStyle(decoration: TextDecoration.lineThrough,color: Colors.red.shade600,fontWeight: FontWeight.w700)
-                                        ),
-                                      ),
-                                      Container(child: Text(itemCurrPrice[index].toString() ,
-                                          style: const TextStyle(color: Color(0xff4465aa),fontWeight: FontWeight.w700)
-                                      ),
-                                      ),
-                                    ],
-                                  ),
-                             ),
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      width:160,
-                                      // color: Colors.blue,
-
-                                      height:35,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                                        children: [
-                                          Container(
-                                            // color: Colors.red,
-                                            width:66,
-                                            height:40,
-
-
-                                            alignment: Alignment.centerLeft,
-                                            child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount:itemRating[index].floor(),
-                                              itemBuilder: (content,index){
-
-                                                return const Icon(Icons.star_rate,color:Colors.orange,size: 12,);
-                                              }
-                                             ),
-                                          ),
-                                          Container(
-                                            // color: Colors.yellow,
-                                            alignment: Alignment.centerRight,
-                                            width:94,
-                                            height:40,
-
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                              Container(
-                                                alignment: Alignment.center,
-
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(color: const Color(0xff4465aa),width: 2),
-                                                  // color:Color(0xff94ccf4),
-                                                  borderRadius: BorderRadius.circular(14),
-                                                ),
-                                                  // color:Colors.teal,
-                                                  width:28,
-                                                  height:28,
-                                                  child: IconButton(onPressed: (){}, icon:
-
-                                                  InkWell(
-                                                    onTap: (){
-                                                      // setState(() {
-                                                      //   _showAddToCartBottomSheet=true;
-                                                      //
-                                                      // });
-
-                                                    },
-                                                    child: Container(
-                                                        child: const Icon(Icons.remove,color: Colors.red,size: 10,)
-                                                    ),
-                                                  )
-                                                  ),
-                                                  ),
-
-                                              Container(
-                                                alignment: Alignment.center,
-                                                   // color:Colors.purple,
-                                                  width:30,
-                                                  child: const Text("1000",style: const TextStyle(fontSize: 13,color:Color(0xff4465aa),fontWeight: FontWeight.w700),),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                // color: Colors.blueGrey,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(color: const Color(0xff4465aa),width: 2),
-                                                  // color:Color(0xff94ccf4),
-                                                  borderRadius: BorderRadius.circular(14),
-                                                ),
-                                                // color:Colors.teal,
-                                                width:28,
-                                                height:28,
-                                                  child: IconButton(onPressed: (){
-                                                    setState(() {
-
-                                                      currentlySelectedCartItem= availableCartItems[index];
-                                                      if(currentlySelectedCartItem!=null){
-                                                        _showAddToCartBottomSheet=true;
-                                                      }
-
-                                                    });
-                                                  }, icon: const Icon(Icons.add,color: Colors.green,size: 10,)),
-                                              )
-
-
-                                            ],),
-                                          ),
-                                        ],
-
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                      ),
-                                    ),
-                                     // ElevatedButton(onPressed: (){}, child:
-                                     //
-                                     //   Text("Add To Cart",style: TextStyle(fontSize: 15)),
-                                     //
-                                     //    style: ElevatedButton.styleFrom(
-                                     //    fixedSize:Size(120,0),
-                                     //    // primary: Colors.deepOrangeAccent,
-                                     //    primary: Color(0xff4465aa),
-                                     // ),),
-                                const SizedBox(height:20),
-
-                          ],
-                      ),
-                        );
+                    children: List.generate(product_list.length, (index) {
+                      return ProductListItem(product: product_list[index]!);
                     }),
                   ),
                 ),
@@ -687,443 +465,33 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-        bottomSheet:
+        // bottomSheet:
         //    filter bottomsheet starts
-        _showFilterBottomSheet
-            ? BottomSheet(
 
-          builder: (BuildContext context) {
-
-            return Container(
-                height:350,
-                child:Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.topCenter,
-                      width: 150,
-                      margin: const EdgeInsets.only(left:20,right:20,top:10),
-                      child: const Divider(
-                        height: 5,
-                        color: Colors.deepOrange,
-                      ),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.all(20),
-                        child: const Text("Filter")
-                    ),
-                    Row(
-                      children: [
-
-                        Checkbox( onChanged: (value){
-                          setState(() {
-                            newest_check=value!;
-                          });
-
-                        }, value: newest_check),
-
-                        const Text("Newest"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-
-                        Checkbox( onChanged: (value){
-                          oldest_check=value!;
-                        }, value: oldest_check),
-
-                        const Text("Oldest"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-
-                        Checkbox( onChanged: (value){
-                          price_high_to_low=value!;
-                        }, value: price_high_to_low),
-
-                        const Text("Price high>Low"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-
-                        Checkbox( onChanged: (value){
-                          price_low_to_high=value!;
-                          print(price_low_to_high);
-                        }, value: price_low_to_high),
-
-                        const Text("Price low>High"),
-                      ],
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              // primary: Colors.deepOrangeAccent,
-                                primary: const Color(0xffF8F8F8),
-                                elevation: 5.0,
-
-                                side: const BorderSide(width: 2.0, color:Color(0xff4465aa),)
-
-                            ),
-                            child: const Text(
-                              'Cancel',
-                              style: TextStyle(color:Color(0xff4465aa),fontWeight: FontWeight.w700),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _showFilterBottomSheet = false;
-                              });
-                            },
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              // primary: Colors.deepOrangeAccent,
-                                primary: const Color(0xffF8F8F8),
-                                elevation: 5.0,
-
-                                side: const BorderSide(width: 2.0, color:Colors.green)
-
-                            ),
-                            child: const Text(
-                              'Apply',
-                              style: TextStyle(color:Colors.green,fontWeight: FontWeight.w700),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _showFilterBottomSheet = false;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-
-
-
-                  ],
-                )
-            );
-          }, onClosing: () {
-          print("closed");
-        },
-
-        ):
-        //    filter bottomsheet ends
-
+        // _showFilterBottomSheet
+        //     ?
+        // BottomSheet(
+        //
+        //   builder: (BuildContext context) {
+        //
+        //       _showFilterBottomSheet=false;
+        //
+        //     return FilterBottomSheet(newest_check: newest_check, oldest_check: oldest_check, price_high_to_low: price_high_to_low, price_low_to_high: price_low_to_high);
+        //   }, onClosing: () {
+        //   print("closed");
+        //
+        // },
+        //
+        // ) :null
+      //    filter bottomsheet ends
         //   add to cart bottomsheet starts
-        _showAddToCartBottomSheet
-            ?BottomSheet(
+        // _showAddToCartBottomSheet ? BottomSheet(onClosing:  ()=>print("closed"),
+        //     builder: (BuildContext context){
+        //       _showAddToCartBottomSheet=false;
+        //       return AddToCartBottomSheet(currentlySelectedProduct: currentlySelectedProduct);
+        //     }
+        // ):null,
 
-          builder: (BuildContext context) {
-
-            return
-              Container(
-                height:190,
-                child:Column(
-                  children: [
-                    Container(
-
-                      padding: const EdgeInsets.only(left:0,right:0),
-                      height:130,
-                      width: double.infinity,
-
-                      decoration: BoxDecoration(
-
-                        borderRadius: BorderRadius.circular(10),
-
-                      ),
-                      child: Center(
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child:
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children:
-                            [
-
-                              Container(
-                                  height: 160,
-                                  width:80,
-                                  // color:Colors.blue,
-                                  child:
-                                  Image(image: currentlySelectedCartItem.itemImage!,fit: BoxFit.contain,)
-                              ),
-                              Container(
-
-                                padding: const EdgeInsets.all(12),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(currentlySelectedCartItem.itemLabel.toString(), style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
-                                        Text(currentlySelectedCartItem.itemLabel.toString()),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [Text("\$"+currentlySelectedCartItem.itemDiscPrice.toString()),
-                                        const SizedBox(width: 10),
-                                        Text(currentlySelectedCartItem.itemRating.toString())],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height:40,
-                                    width: 50,
-
-                                    child: IconButton(
-                                      onPressed: () {
-                                      //   setState(() {
-                                      //
-                                      //     widget.counter[index]++;
-                                      //     widget.itemDiscPriceSubTotal[index]=cart[index].itemDiscPrice*widget.counter[index];
-                                      //     print("subtotal: ${widget.itemDiscPriceSubTotal[index]}");
-                                      //
-                                      //
-                                      //
-                                      //   });
-                                      },
-                                      icon: const Icon(Icons.add),
-
-                                      constraints: const BoxConstraints(maxHeight: 20),
-                                      splashRadius: 10,
-                                      alignment: Alignment.topCenter,
-                                    ),
-                                  ),
-
-                                  // Text(widget.itemDiscPriceSubTotal[index].toString() ,style: TextStyle(fontSize: 16),),
-                                  const Text("1000" ,style: TextStyle(fontSize: 16),),
-                                  Container(
-                                    height:40,
-                                    width: 50,
-                                    child: IconButton(
-                                      padding: const EdgeInsets.only(bottom: 20),
-                                      onPressed: (){
-
-                                        // setState(() {
-                                        //
-                                        //   widget.counter[index]--;
-                                        //   widget.itemDiscPriceSubTotal[index]=cart[index].itemDiscPrice*widget.counter[index];
-                                        //   print("subtotal: ${widget.itemDiscPriceSubTotal[index]}");
-                                        //
-                                        // });
-                                      },
-                                      icon: const Icon(Icons.remove),
-                                      constraints: const BoxConstraints(maxHeight: 20),
-                                      splashRadius: 10,
-                                      alignment: Alignment.bottomCenter,
-                                    ),
-                                  ),
-                                ],),
-                              Center(
-                                  child: IconButton(icon: const Icon(Icons.delete,color:Colors.red),
-                                    onPressed: () {
-                                      // setState(() {
-                                      //
-                                      //   cart.removeAt(index);
-                                      //
-                                      // });
-                                    },)
-                              ),
-
-                            ],
-                          ),
-                        ),
-                      ),
-
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left:12.0,right:12.0),
-                      child: Row(
-
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                // primary: Colors.deepOrangeAccent,
-                                  primary: const Color(0xffF8F8F8),
-                                  elevation: 5.0,
-
-                                  side: const BorderSide(width: 2.0, color:Colors.red)
-
-                              ),
-                              onPressed: (){
-                            setState(() {
-                              _showAddToCartBottomSheet=false;
-                            });
-                          }, child: const Text("Cancel",style: TextStyle(color: Colors.red),)),
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                // primary: Colors.deepOrangeAccent,
-                                  primary: const Color(0xffF8F8F8),
-                                  elevation: 5.0,
-
-                                  side: const BorderSide(width: 2.0, color:Colors.green)
-
-                              ),
-                              onPressed: (){
-                            _showAddToCartBottomSheet=false;
-                          }, child: const Text("Add to cart",style: TextStyle(color: Colors.green)),
-                          )
-
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-            );
-          }, onClosing: () {
-          print("closed");
-        },
-
-        ):null,
-        //    add to cart bottomsheet ends
-      // _showBottomSheet
-      //     ? BottomSheet(
-      //
-      //   builder: (BuildContext context) {
-      //
-      //   return Container(
-      //       height:400,
-      //       child:Column(
-      //     children: [
-      //       Container(
-      //         alignment: Alignment.topCenter,
-      //           width: 150,
-      //           margin: EdgeInsets.only(left:20,right:20,top:10),
-      //           child: Divider(
-      //             height: 5,
-      //             color: Colors.deepOrange,
-      //           ),
-      //       ),
-      //       Container(
-      //           margin: EdgeInsets.all(20),
-      //           child: Text("Filter")
-      //       ),
-      //       Row(
-      //         children: [
-      //
-      //           Checkbox( onChanged: (value){
-      //             newest_check=value!;
-      //           }, value: false),
-      //
-      //           Text("Newest"),
-      //         ],
-      //       ),
-      //       Row(
-      //         children: [
-      //
-      //           Checkbox( onChanged: (value){
-      //             oldest_check=value!;
-      //           }, value: false),
-      //
-      //           Text("Oldest"),
-      //         ],
-      //       ),
-      //       Row(
-      //         children: [
-      //
-      //           Checkbox( onChanged: (value){
-      //             price_high_to_low=value!;
-      //           }, value: false),
-      //
-      //           Text("Price high>Low"),
-      //         ],
-      //       ),
-      //       Row(
-      //         children: [
-      //
-      //           Checkbox( onChanged: (value){
-      //             price_low_to_high=value!;
-      //           }, value: false),
-      //
-      //           Text("Price low>High"),
-      //         ],
-      //       ),
-      //       Row(
-      //         children: [
-      //
-      //           Checkbox( onChanged: (value){
-      //             newest_check=value!;
-      //           }, value: false),
-      //
-      //           Text("Newest"),
-      //         ],
-      //       ),
-      //       Padding(
-      //         padding: const EdgeInsets.all(8.0),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             ElevatedButton(
-      //               style: ElevatedButton.styleFrom(
-      //                 // primary: Colors.deepOrangeAccent,
-      //                   primary: Color(0xffF8F8F8),
-      //                   elevation: 5.0,
-      //
-      //                   side: BorderSide(width: 2.0, color:Color(0xff4465aa),)
-      //
-      //               ),
-      //               child: const Text(
-      //                 'Cancel',
-      //                 style: TextStyle(color:Color(0xff4465aa),fontWeight: FontWeight.w700),
-      //               ),
-      //               onPressed: () {
-      //                 setState(() {
-      //                   _showBottomSheet = false;
-      //                 });
-      //               },
-      //             ),
-      //             ElevatedButton(
-      //               style: ElevatedButton.styleFrom(
-      //                 // primary: Colors.deepOrangeAccent,
-      //                   primary: Color(0xffF8F8F8),
-      //                   elevation: 5.0,
-      //
-      //                   side: BorderSide(width: 2.0, color:Colors.green)
-      //
-      //               ),
-      //               child: const Text(
-      //                 'Apply',
-      //                 style: TextStyle(color:Colors.green,fontWeight: FontWeight.w700),
-      //               ),
-      //               onPressed: () {
-      //                 setState(() {
-      //                   _showBottomSheet = false;
-      //                 });
-      //               },
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //
-      //
-      //
-      //     ],
-      //   )
-      //   );
-      // }, onClosing: () {
-      //     print("closed");
-      // },
-      //
-      // ):null,
     );
   }
 }

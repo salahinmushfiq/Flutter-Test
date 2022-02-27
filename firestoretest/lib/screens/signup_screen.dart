@@ -107,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SafeArea(
 
         child: Container(
-          color: Color(0xffF8F8F8),
+          color: Color(0xffe3dbd3),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -179,8 +179,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       padding: EdgeInsets.only(left:10,right:10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Color(0xff4465aa),width: 2,),
-                        color: Colors.white,
+                        border: Border.all(color: Color(0xff3c4f6a),width: 2,),
+                        color: Color(0xffe3dbd3),
                       ),
                       child: TextFormField(
                         controller: user_name_controller,
@@ -196,8 +196,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       padding: EdgeInsets.only(left:10,right:10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Color(0xff4465aa),width: 2,),
-                        color: Colors.white,
+                        border: Border.all(color: Color(0xff3c4f6a),width: 2,),
+                        color: Color(0xffe3dbd3),
                       ),
                       child: TextFormField(
                           controller: user_mail_controller,
@@ -213,8 +213,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         padding: EdgeInsets.only(left:10,right:10),
                         decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Color(0xff4465aa),width: 2,),
-                        color: Colors.white,
+                          border: Border.all(color: Color(0xff3c4f6a),width: 2,),
+                        color: Color(0xffe3dbd3),
                       ),
                       child: TextFormField(
                         keyboardType: TextInputType.text,
@@ -249,8 +249,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       padding: EdgeInsets.only(left:10,right:10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Color(0xff4465aa),width: 2,),
-                        color: Colors.white,
+                        border: Border.all(color: Color(0xff3c4f6a),width: 2,),
+                        color: Color(0xffe3dbd3),
                       ),
                       child: TextFormField(
                         keyboardType: TextInputType.text,
@@ -285,10 +285,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     // primary: Colors.deepOrangeAccent,
-                      primary: Color(0xffF8F8F8),
+                      primary: Color(0xffe3dbd3),
                       elevation: 5.0,
 
-                      side: BorderSide(width: 2.0, color:Color(0xff4465aa),)
+                      side: BorderSide(width: 2.0, color:Color(0xff3c4f6a),)
 
                   ),
                   onPressed: () {
@@ -313,7 +313,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
-                  child: Text('Sign Up',style: TextStyle(color:Color(0xff4465aa),fontWeight: FontWeight.w700),)
+                  child: Text('Sign Up',style: TextStyle(color:Color(0xff3c4f6a),fontWeight: FontWeight.w700),)
 
 
                 ),
@@ -352,9 +352,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Already have an account?",style: TextStyle(
-                            color:Color(0xff4465aa),
+                            color:Color(0xff3c4f6a),
                         ),),SizedBox(width:8),
-                        InkWell(child: Text("Sign In",style: TextStyle(color: Colors.blueAccent),),
+                        InkWell(child: Text("Sign In",style: TextStyle(color: Color(0xff3c4f6a)),),
                           onTap:(){
                               Navigator.pushNamed(context, SignInScreen.route);
                            },)

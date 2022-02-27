@@ -11,7 +11,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('search Screen'),
+        title: Text('Search'),
       ),
       body: Center(
         child: Column(
