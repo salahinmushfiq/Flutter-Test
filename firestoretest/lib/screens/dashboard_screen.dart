@@ -2,15 +2,11 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firestoretest/widgets/add_to_cart_bottomsheet.dart';
+import 'package:firestoretest/globals.dart';
 import 'package:firestoretest/widgets/filter_bottomsheet.dart';
 import 'package:firestoretest/widgets/productlist_item.dart';
-
-import 'package:flutter/cupertino.dart';
-
 import '/models/product.dart';
 import 'package:flutter/material.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
@@ -23,10 +19,18 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  // late PersistentBottomSheetController _controller; // <------ Instance variable
+
+  bool newestCheck=false;
+  bool oldestCheck=false;
+  bool priceHighToLow=false;
+  bool priceLowToHigh=false;
+  // bool showFilterBottomSheet=true;
 
   List cart=List.of(<Product>{});
-  List product_list=List.of(<Product>{});
+  List productList=List.of(<Product>{});
   List productId=List.of(<int>{});
   List categoryId=List.of(<int>{});
   List productImage=List.of(<AssetImage>{});
@@ -35,12 +39,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List productDiscPrice=List.of(<double>{});
   List productLabel=List.of(<String>{});
   List productRating=List.of(<double>{});
+
+  int filter=-1; //no filter
+
+  double heightOfModalBottomSheet=200;
+
+  var productData;
   // Product currentlySelectedProduct=Product(productImage: null);
   void addToCart(Product product) {
     setState(() {
       cart.add(product);
-
     });
+  }
+  // void _incrementBottomSheet(){
+  //   _controller.setState!(
+  //           (){
+  //         heightOfModalBottomSheet += 100;
+  //       }
+  //   );
+  // }
+  @override
+  void initState() {
+    super.initState();
+    productData=getProductData("products");
+    log("price_low_to_high from Dashboard: "+GlobalVariables.priceLowToHigh.toString());
+
   }
   @override
   Widget build(BuildContext context) {
@@ -66,134 +89,134 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // productImage.add(const AssetImage("assets/images/products/productsWomen8.jpeg"));
     // productImage.add(const AssetImage("assets/images/products/productsWomen9.jpg"));
 
-    productLabel.add("Men Shirt 1");
-    productLabel.add("Men Shirt 2");
-    productLabel.add("Men Pant 1");
-    productLabel.add("Men Pant 2");
-    productLabel.add("Men Pant 3");
-    productLabel.add("Men Pant 4");
-    productLabel.add("Men Pant 5");
-    productLabel.add("Men Pant 6");
-    productLabel.add("Men Pant 7");
-    productLabel.add("Men Shoe 1");
-    productLabel.add("Men Shoe 2");
-    productLabel.add("Men Shoe 3");
-    productLabel.add("Women Shirt 1");
-    productLabel.add("Women Shirt 2");
-    productLabel.add("Women Shirt 3");
-    productLabel.add("Women Shirt 4");
-    productLabel.add("Women Shirt 5");
-    productLabel.add("Women Pant 1");
-    productLabel.add("Women Pant 2");
-    productLabel.add("Women Pant 3");
-
-    productId.add(1);
-    productId.add(2);
-    productId.add(3);
-    productId.add(4);
-    productId.add(5);
-    productId.add(6);
-    productId.add(7);
-    productId.add(8);
-    productId.add(9);
-    productId.add(10);
-    productId.add(11);
-    productId.add(12);
-    productId.add(13);
-    productId.add(14);
-    productId.add(15);
-    productId.add(16);
-    productId.add(17);
-    productId.add(18);
-    productId.add(19);
-    productId.add(20);
-
-    categoryId.add(1);
-    categoryId.add(1);
-    categoryId.add(2);
-    categoryId.add(2);
-    categoryId.add(2);
-    categoryId.add(2);
-    categoryId.add(2);
-    categoryId.add(2);
-    categoryId.add(2);
-    categoryId.add(3);
-    categoryId.add(3);
-    categoryId.add(3);
-    categoryId.add(4);
-    categoryId.add(4);
-    categoryId.add(4);
-    categoryId.add(4);
-    categoryId.add(4);
-    categoryId.add(5);
-    categoryId.add(5);
-    categoryId.add(5);
-
-    productPrevPrice.add(200.0);
-    productPrevPrice.add(450.0);
-    productPrevPrice.add(190.0);
-    productPrevPrice.add(1200.0);
-    productPrevPrice.add(900.0);
-    productPrevPrice.add(900.0);
-    productPrevPrice.add(200.0);
-    productPrevPrice.add(450.0);
-    productPrevPrice.add(190.0);
-    productPrevPrice.add(1200.0);
-    productPrevPrice.add(900.0);
-    productPrevPrice.add(900.0);
-    productPrevPrice.add(200.0);
-    productPrevPrice.add(450.0);
-    productPrevPrice.add(190.0);
-    productPrevPrice.add(1200.0);
-    productPrevPrice.add(900.0);
-    productPrevPrice.add(900.0);
-    productPrevPrice.add(900.0);
-    productPrevPrice.add(900.0);
-
-
-
-    productDiscPrice.add(190.0);
-    productDiscPrice.add(420.0);
-    productDiscPrice.add(180.0);
-    productDiscPrice.add(200.0);
-    productDiscPrice.add(200.0);
-    productDiscPrice.add(200.0);
-    productDiscPrice.add(190.0);
-    productDiscPrice.add(420.0);
-    productDiscPrice.add(180.0);
-    productDiscPrice.add(200.0);
-    productDiscPrice.add(200.0);
-    productDiscPrice.add(200.0);
-    productDiscPrice.add(190.0);
-    productDiscPrice.add(420.0);
-    productDiscPrice.add(180.0);
-    productDiscPrice.add(200.0);
-    productDiscPrice.add(200.0);
-    productDiscPrice.add(200.0);
-    productDiscPrice.add(200.0);
-    productDiscPrice.add(200.0);
-
-
-    productRating.add(4.2);
-    productRating.add(4.5);
-    productRating.add(4.5);
-    productRating.add(4.7);
-    productRating.add(2.5);
-    productRating.add(5.0);
-    productRating.add(4.2);
-    productRating.add(4.5);
-    productRating.add(4.5);
-    productRating.add(4.7);
-    productRating.add(2.5);
-    productRating.add(5.0);
-    productRating.add(4.2);
-    productRating.add(4.5);
-    productRating.add(4.5);
-    productRating.add(4.7);
-    productRating.add(2.5);
-    productRating.add(5.0);
-    productRating.add(2.5);
-    productRating.add(2.5);
+    // productLabel.add("Men Shirt 1");
+    // productLabel.add("Men Shirt 2");
+    // productLabel.add("Men Pant 1");
+    // productLabel.add("Men Pant 2");
+    // productLabel.add("Men Pant 3");
+    // productLabel.add("Men Pant 4");
+    // productLabel.add("Men Pant 5");
+    // productLabel.add("Men Pant 6");
+    // productLabel.add("Men Pant 7");
+    // productLabel.add("Men Shoe 1");
+    // productLabel.add("Men Shoe 2");
+    // productLabel.add("Men Shoe 3");
+    // productLabel.add("Women Shirt 1");
+    // productLabel.add("Women Shirt 2");
+    // productLabel.add("Women Shirt 3");
+    // productLabel.add("Women Shirt 4");
+    // productLabel.add("Women Shirt 5");
+    // productLabel.add("Women Pant 1");
+    // productLabel.add("Women Pant 2");
+    // productLabel.add("Women Pant 3");
+    //
+    // productId.add(1);
+    // productId.add(2);
+    // productId.add(3);
+    // productId.add(4);
+    // productId.add(5);
+    // productId.add(6);
+    // productId.add(7);
+    // productId.add(8);
+    // productId.add(9);
+    // productId.add(10);
+    // productId.add(11);
+    // productId.add(12);
+    // productId.add(13);
+    // productId.add(14);
+    // productId.add(15);
+    // productId.add(16);
+    // productId.add(17);
+    // productId.add(18);
+    // productId.add(19);
+    // productId.add(20);
+    //
+    // categoryId.add(1);
+    // categoryId.add(1);
+    // categoryId.add(2);
+    // categoryId.add(2);
+    // categoryId.add(2);
+    // categoryId.add(2);
+    // categoryId.add(2);
+    // categoryId.add(2);
+    // categoryId.add(2);
+    // categoryId.add(3);
+    // categoryId.add(3);
+    // categoryId.add(3);
+    // categoryId.add(4);
+    // categoryId.add(4);
+    // categoryId.add(4);
+    // categoryId.add(4);
+    // categoryId.add(4);
+    // categoryId.add(5);
+    // categoryId.add(5);
+    // categoryId.add(5);
+    //
+    // productPrevPrice.add(200.0);
+    // productPrevPrice.add(450.0);
+    // productPrevPrice.add(190.0);
+    // productPrevPrice.add(1200.0);
+    // productPrevPrice.add(900.0);
+    // productPrevPrice.add(900.0);
+    // productPrevPrice.add(200.0);
+    // productPrevPrice.add(450.0);
+    // productPrevPrice.add(190.0);
+    // productPrevPrice.add(1200.0);
+    // productPrevPrice.add(900.0);
+    // productPrevPrice.add(900.0);
+    // productPrevPrice.add(200.0);
+    // productPrevPrice.add(450.0);
+    // productPrevPrice.add(190.0);
+    // productPrevPrice.add(1200.0);
+    // productPrevPrice.add(900.0);
+    // productPrevPrice.add(900.0);
+    // productPrevPrice.add(900.0);
+    // productPrevPrice.add(900.0);
+    //
+    //
+    //
+    // productDiscPrice.add(190.0);
+    // productDiscPrice.add(420.0);
+    // productDiscPrice.add(180.0);
+    // productDiscPrice.add(200.0);
+    // productDiscPrice.add(200.0);
+    // productDiscPrice.add(200.0);
+    // productDiscPrice.add(190.0);
+    // productDiscPrice.add(420.0);
+    // productDiscPrice.add(180.0);
+    // productDiscPrice.add(200.0);
+    // productDiscPrice.add(200.0);
+    // productDiscPrice.add(200.0);
+    // productDiscPrice.add(190.0);
+    // productDiscPrice.add(420.0);
+    // productDiscPrice.add(180.0);
+    // productDiscPrice.add(200.0);
+    // productDiscPrice.add(200.0);
+    // productDiscPrice.add(200.0);
+    // productDiscPrice.add(200.0);
+    // productDiscPrice.add(200.0);
+    //
+    //
+    // productRating.add(4.2);
+    // productRating.add(4.5);
+    // productRating.add(4.5);
+    // productRating.add(4.7);
+    // productRating.add(2.5);
+    // productRating.add(5.0);
+    // productRating.add(4.2);
+    // productRating.add(4.5);
+    // productRating.add(4.5);
+    // productRating.add(4.7);
+    // productRating.add(2.5);
+    // productRating.add(5.0);
+    // productRating.add(4.2);
+    // productRating.add(4.5);
+    // productRating.add(4.5);
+    // productRating.add(4.7);
+    // productRating.add(2.5);
+    // productRating.add(5.0);
+    // productRating.add(2.5);
+    // productRating.add(2.5);
 
 
     // Product product1=Product();
@@ -356,7 +379,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // product20.productRating=productRating[19];
     // product20.productPrevPrice=productPrevPrice[19];
     // product20.productDiscPrice=productDiscPrice[19];
-    
+
     // product_list.add(product1);
     // product_list.add(product2);
     // product_list.add(product3);
@@ -378,7 +401,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // product_list.add(product19);
     // product_list.add(product20);
 
-    CollectionReference products = FirebaseFirestore.instance.collection('products');
+
 
     // Future<void> addProduct() {
     //   // Call the products CollectionReference to add a new product
@@ -396,15 +419,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     //       .catchError((error) => print("Failed to add user: $error"));
     // }
     // addProduct();
-    int length= (productLabel.length*.5).toInt();
+
     return Scaffold(
 
-      key: _scaffoldKey,
+      // key: _scaffoldKey,
 
       body: SafeArea(
         child:
         Container(
-          color: Color(0xffe3dbd3),
+          color: const Color(0xffe3dbd3),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
@@ -450,7 +473,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: const Color(0xffc9a697),width: 2,),
-                  color: Color(0xffe3dbd3),
+                  color: const Color(0xffe3dbd3),
                 ),
                 child: TextFormField(
                   decoration: InputDecoration(
@@ -458,17 +481,207 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     iconColor: const Color(0xffc9a697),
                     labelText: "Filter",
                     prefixIcon:  InkWell(
-                      onTap: (){
-                        Scaffold.of(context).showBottomSheet((context) => FilterBottomSheet());
-                        setState(() {
-                          // _showFilterBottomSheet=true;
-                        });
+                      onTap: ()async{
+                        // Scaffold.of(context).showBottomSheet((context) => const FilterBottomSheet());
+                        // setState(() {
+                        //   // _showFilterBottomSheet=true;
+                        // });
+
+                          Scaffold.of(context).showBottomSheet((context){
+                            return Builder(
+                              builder: (context) {
+                                return StatefulBuilder(
+                                  builder: (context,setState) {
+                                    return Container(
+                                          color: const Color(0xffe3dbd3),
+                                          height:200,
+                                          child:Column(
+                                            children: [
+                                              Container(
+                                                alignment: Alignment.topCenter,
+                                                width: double.infinity,
+                                                margin: const EdgeInsets.only(left:20,right:20),
+                                                child: const Divider(
+                                                  height: 5,
+                                                  color: Color(0xffc9a697),
+                                                ),
+                                              ),
+                                              Container(
+                                                  margin: const EdgeInsets.all(20),
+                                                  child: const Text("Filter",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w900,fontSize: 16),)
+                                              ),
+                                              SizedBox(
+                                                height:20,
+                                                child: Row(
+                                                  children: [
+
+                                                    Checkbox(
+                                                        activeColor: const Color(0xffa17e66),
+                                                        onChanged: (value){
+                                                          setState(() {
+                                                            newestCheck=value!;
+                                                            filter=0;
+
+                                                          });
+
+                                                          if(newestCheck){
+                                                            // newest_check=false;
+                                                            oldestCheck=false;
+                                                            priceHighToLow=false;
+                                                            priceLowToHigh=false;
+                                                          }
+
+                                                        }, value: newestCheck),
+
+                                                    const Text("Newest",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w700)),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height:20,
+
+                                                child: Row(
+                                                  children: [
+
+                                                    Checkbox(
+                                                        activeColor: const Color(0xffa17e66),
+
+                                                        onChanged: (value){
+                                                          setState(() {
+                                                            oldestCheck=value!;
+                                                            filter=1;
+                                                            getProductData("products");
+                                                          });
+                                                          if(oldestCheck){
+                                                            newestCheck=false;
+                                                            priceHighToLow=false;
+                                                            priceLowToHigh=false;
+                                                          }
+                                                        }, value: oldestCheck),
+
+                                                    const Text("Oldest",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w700)),
+
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height:20,
+                                                child: Row(
+                                                  children: [
+
+                                                    Checkbox( activeColor: Color(0xffa17e66),
+
+                                                        onChanged: (value){
+
+                                                          setState(() {
+                                                            filter=2;
+                                                            priceHighToLow=value!;
+                                                            getProductData("products");
+
+                                                          });
+                                                          if(priceHighToLow){
+                                                            newestCheck=false;
+                                                            oldestCheck=false;
+                                                            // price_high_to_low=false;
+                                                            priceLowToHigh=false;
+
+                                                          }
+                                                        }, value: priceHighToLow),
+
+                                                    const Text("Price high>Low",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w700)),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height:20,
+                                                child: Row(
+                                                  children: [
+
+                                                    Checkbox(
+                                                        activeColor: const Color(0xffa17e66),
+                                                        onChanged: (value){
+                                                          setState(() {
+                                                            filter=3;
+                                                            priceLowToHigh=value!;
+                                                            getProductData("products");
+
+                                                          });
+                                                          if(priceLowToHigh){
+                                                            newestCheck=false;
+                                                            oldestCheck=false;
+                                                            priceHighToLow=false;
+                                                            // price_low_to_high=false;
+
+
+                                                            log("price_low_to_high: "+priceLowToHigh.toString());
+                                                          }
+                                                          else{
+                                                            log("price_low_to_high: "+priceLowToHigh.toString());
+                                                          }
+                                                        }, value: priceLowToHigh),
+
+                                                    const Text("Price low>High",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w700)),
+                                                  ],
+                                                ),
+                                              ),
+
+                                              Padding(
+                                                padding: const EdgeInsets.all(4.0),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    SizedBox(
+                                                      height:25,
+                                                      child: ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                            primary: const Color(0xffF8F8F8),
+                                                            elevation: 5.0,
+                                                            side: const BorderSide(width: 2.0, color:Color(0xffc9a697),)
+                                                        ),
+                                                        child: const Text(
+                                                          'Cancel',
+                                                          style: TextStyle(color:Color(0xffc9a697),fontWeight: FontWeight.w700),
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        },
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height:25,
+                                                      child: ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                            primary: const Color(0xffF8F8F8),
+                                                            elevation: 5.0,
+                                                            side: const BorderSide(width: 2.0, color:Colors.green)
+                                                        ),
+                                                        child: const Text(
+                                                          'Apply',
+                                                          style: TextStyle(color:Colors.green,fontWeight: FontWeight.w700),
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                      );
+                                  }
+                                );
+                              }
+                            );
+                          });
+
                       },
                       child: Container(
                         width:15,
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.only(right:0.0),
-                        child: const FaIcon(FontAwesomeIcons.slidersH,size: 15,color: const Color(0xffc9a697)),
+                        child: const FaIcon(FontAwesomeIcons.slidersH,size: 15,color:  Color(0xffc9a697)),
                       ),
                     ),
                     border: InputBorder.none,
@@ -489,7 +702,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Flexible(
                 flex:14,
                 child: StreamBuilder(
-                    stream: getProductData("products"),
+                    stream: productData,
                     builder: (context,AsyncSnapshot snapshot1) {
                       if(snapshot1.hasData){
                         if(snapshot1.connectionState ==ConnectionState.waiting){
@@ -502,7 +715,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           );
                         }
                         else if(snapshot1.connectionState ==ConnectionState.none){
-                          return Text("Connection State None");
+                          return const Text("Connection State None");
                         }
                         else if(snapshot1.connectionState ==ConnectionState.active){
                           log("Active State");
@@ -519,7 +732,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             childAspectRatio:.6,
                             mainAxisSpacing: 8,
                             // Generate 100 widgets that display their index in the List.
-                            children: List.generate(snapshot1.data!.docs!.length, (index) {
+                            children: ListView.builder(snapshot1.data!.docs!.length, (index) {
 
                               Product currProduct=Product.fromJson(snapshot1.data.docs[index].data());
 
@@ -550,7 +763,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         );
                                       }
                                       else{
-                                        return CircularProgressIndicator();
+                                        return const CircularProgressIndicator();
                                       }
 
                                     }
@@ -594,15 +807,60 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   getProductData(String collection) {
-    try {
-      return FirebaseFirestore.instance.collection(collection).orderBy('productId').snapshots();
-    } on Exception catch (e) {
-      log(e.toString());
-      // TODO
+    log("hit on data fetch");
+    if(filter==2){
+      log("filter 2 called");
+      try {
+        setState(() {
+          productData= FirebaseFirestore.instance.collection(collection).orderBy('productDiscPrice', descending: true).snapshots();
+        });
+
+        return productData;
+
+      } on Exception catch (e) {
+        log(e.toString());
+        log("filter 2 caught"+e.toString());
+        // TODO
+      }
     }
+    else if(filter==3){
+      log("filter 3 called");
+      try {
+        setState(() {
+          productData= FirebaseFirestore.instance.collection(collection).orderBy('productDiscPrice', descending: false).snapshots();
+        });
+
+        return productData;
+      } on Exception catch (e) {
+        log(e.toString());
+        // TODO
+      }
+    }
+    else if(filter==-1){
+      log("filter 3 called");
+      try {
+        productData=  FirebaseFirestore.instance.collection(collection).orderBy('productId').snapshots();
+        return productData;
+      } on Exception catch (e) {
+        log(e.toString());
+        // TODO
+      }
+    }
+    else{
+      try {
+        productData =FirebaseFirestore.instance.collection(collection).orderBy('productId').snapshots();
+        return productData;
+
+      } on Exception catch (e) {
+        log(e.toString());
+        // TODO
+      }
+    }
+
   }
 
   getProductImageDownloadUrl(String child1, child2) {
+    log("hit on media fetch");
     try {
       return FirebaseStorage.instance.ref().child(child1).child(child2).getDownloadURL();
     } on Exception catch (e) {

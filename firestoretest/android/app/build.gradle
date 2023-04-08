@@ -57,7 +57,9 @@ flutter {
     source '../..'
 }
 // ...
-
+dependencies {
+    implementation 'com.google.firebase:firebase-appcheck-debug:16.0.0-beta01'
+}
 
 
 // ...

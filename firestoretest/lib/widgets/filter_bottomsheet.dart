@@ -1,27 +1,27 @@
-import '/models/product.dart';
+import 'dart:developer';
+import 'package:firestoretest/globals.dart';
 import 'package:flutter/material.dart';
-
-
 
 class FilterBottomSheet extends StatefulWidget {
   static String route = "FilterBottomSheet";
 
-  bool newest_check=false;
-  bool oldest_check=false;
-  bool price_high_to_low=false;
-  bool price_low_to_high=false;
-  bool showFilterBottomSheet=true;
-  FilterBottomSheet();
+  
+  const FilterBottomSheet({Key? key}) : super(key: key);
 
   @override
   State<FilterBottomSheet> createState() => _FilterBottomSheetState();
 }
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
+  bool newestCheck=false;
+  bool oldestCheck=false;
+  bool priceHighToLow=false;
+  bool priceLowToHigh=false;
+  bool showFilterBottomSheet=true;
 
   @override
   Widget build(BuildContext context) {
-    return widget.showFilterBottomSheet?
+    return showFilterBottomSheet?
     Container(
         color: const Color(0xffe3dbd3),
         height:200,
@@ -40,26 +40,35 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 margin: const EdgeInsets.all(20),
                 child: const Text("Filter",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w900,fontSize: 16),)
             ),
-            Container(
+            SizedBox(
               height:20,
               child: Row(
                 children: [
 
                   Checkbox(
 
-                      activeColor: Color(0xffa17e66),
+                      activeColor: const Color(0xffa17e66),
                       onChanged: (value){
                     setState(() {
-                      widget.newest_check=value!;
+                      newestCheck=value!;
                     });
-                  }, value: widget.newest_check),
+
+                    if(newestCheck){
+                      // newest_check=false;
+                      oldestCheck=false;
+                      priceHighToLow=false;
+                      priceLowToHigh=false;
+                    }
+
+                  }, value: newestCheck),
 
                   const Text("Newest",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w700)),
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height:20,
+
               child: Row(
                 children: [
 
@@ -67,16 +76,22 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     activeColor: Color(0xffa17e66),
                       onChanged: (value){
                     setState(() {
-                      widget.oldest_check=value!;
+                      oldestCheck=value!;
                     });
-                  }, value: widget.oldest_check),
+                    if(oldestCheck){
+                      newestCheck=false;
+                      // oldest_check=false;
+                      priceHighToLow=false;
+                      priceLowToHigh=false;
+                    }
+                  }, value: oldestCheck),
 
                   const Text("Oldest",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w700)),
 
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height:20,
               child: Row(
                 children: [
@@ -84,28 +99,46 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   Checkbox( activeColor: Color(0xffa17e66),
                       onChanged: (value){
                     setState(() {
-                      widget.price_high_to_low=value!;
+                      priceHighToLow=value!;
                     });
-                  }, value: widget.price_high_to_low),
+                    if(priceHighToLow){
+                      newestCheck=false;
+                      oldestCheck=false;
+                      // price_high_to_low=false;
+                      priceLowToHigh=false;
+
+                    }
+                  }, value: priceHighToLow),
 
                   const Text("Price high>Low",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w700)),
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height:20,
               child: Row(
                 children: [
 
                   Checkbox(
-                      activeColor: Color(0xffa17e66),
+                      activeColor: const Color(0xffa17e66),
                       onChanged: (value){
                     setState(() {
-                      widget.price_low_to_high=value!;
+                      priceLowToHigh=value!;
+                      GlobalVariables.priceLowToHigh=priceLowToHigh;
                     });
+                    if(priceLowToHigh){
+                      newestCheck=false;
+                      oldestCheck=false;
+                      priceHighToLow=false;
+                      // price_low_to_high=false;
 
-                    print(widget.price_low_to_high);
-                  }, value: widget.price_low_to_high),
+
+                      log("price_low_to_high globally: "+GlobalVariables.priceLowToHigh.toString());
+                    }
+                    else{
+                      log("price_low_to_high globally: "+GlobalVariables.priceLowToHigh.toString());
+                    }
+                  }, value: priceLowToHigh),
 
                   const Text("Price low>High",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w700)),
                 ],
@@ -117,7 +150,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  SizedBox(
                     height:25,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -132,13 +165,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                       onPressed: () {
                         Navigator.pop(context);
                         setState(() {
-                          widget.showFilterBottomSheet = false;
+                          showFilterBottomSheet = false;
 
                         });
                       },
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height:25,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -153,7 +186,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                       onPressed: () {
                         Navigator.pop(context);
                         setState(() {
-                          widget.showFilterBottomSheet = false;
+                          showFilterBottomSheet = false;
                         });
                       },
                     ),
@@ -163,7 +196,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             ),
           ],
         )
-    ):Container(height:0,width:0);
+    ):const SizedBox(height:0,width:0);
   }
   }
 

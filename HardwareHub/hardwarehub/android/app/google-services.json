@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1076722276166",
+    "firebase_url": "https://smartlab-d8086-default-rtdb.firebaseio.com",
+    "project_id": "smartlab-d8086",
+    "storage_bucket": "smartlab-d8086.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076722276166:android:eb6541d71c189c9cfe7747",
+        "android_client_info": {
+          "package_name": "com.example.hardware_hub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076722276166-3cbguasfq60f9d7k4poagi7f987jq002.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEibrbmoGatLU8MnSWovNdRw2ovyWru-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076722276166-3cbguasfq60f9d7k4poagi7f987jq002.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076722276166:android:1e03c633f0e3b395fe7747",
+        "android_client_info": {
+          "package_name": "com.example.hardwarehub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076722276166-3cbguasfq60f9d7k4poagi7f987jq002.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEibrbmoGatLU8MnSWovNdRw2ovyWru-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076722276166-3cbguasfq60f9d7k4poagi7f987jq002.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

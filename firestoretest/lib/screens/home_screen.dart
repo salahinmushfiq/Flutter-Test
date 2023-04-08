@@ -1,9 +1,6 @@
 import 'package:firestoretest/widgets/add_to_cart_bottomsheet.dart';
 import 'package:firestoretest/widgets/filter_bottomsheet.dart';
 import 'package:firestoretest/widgets/productlist_item.dart';
-
-import 'package:flutter/cupertino.dart';
-
 import '/models/product.dart';
 import 'package:flutter/material.dart';
 
@@ -20,19 +17,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool _showFilterBottomSheet = false;
-  bool _showAddToCartBottomSheet = false;
 
-  bool newest_check=false;
-  bool oldest_check=false;
-  bool price_low_to_high=false;
-  bool price_high_to_low=false;
-  bool best_selling=false;
 
-  int _selectedIndex=0;
+  bool newestCheck=false;
+  bool oldestCheck=false;
+  bool priceLowToHigh=false;
+  bool priceHighToLow=false;
+  bool bestSelling=false;
+
   List cart=List.of(<Product>{});
 
-  List product_list=List.of(<Product>{});
+  List productList=List.of(<Product>{});
   List productId=List.of(<int>{});
   List categoryId=List.of(<int>{});
   List productImage=List.of(<String>{});
@@ -40,11 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
   List productDiscPrice=List.of(<double>{});
   List productLabel=List.of(<String>{});
   List productRating=List.of(<double>{});
-  // Product currentlySelectedProduct=Product();
+  bool _showFilterBottomSheet=false;
+
   void addToCart(Product product) {
     setState(() {
       cart.add(product);
-
     });
   }
   @override
@@ -201,151 +196,148 @@ class _HomeScreenState extends State<HomeScreen> {
     productRating.add(2.5);
 
 
-    Product Product1=Product();
-    Product1.productImage=productImage[0];
-    Product1.productLabel=productLabel[0];
-    Product1.productRating=productRating[0];
-    Product1.productPrevPrice=productPrevPrice[0];
-    Product1.productDiscPrice=productDiscPrice[0];
-    Product Product2=Product();
-    Product2.productImage=productImage[1];
-    Product2.productLabel=productLabel[1];
-    Product2.productRating=productRating[1];
-    Product2.productPrevPrice=productPrevPrice[1];
-    Product2.productDiscPrice=productDiscPrice[1];
-    Product Product3=Product();
-    Product3.productImage=productImage[2];
-    Product3.productLabel=productLabel[2];
-    Product3.productRating=productRating[2];
-    Product3.productPrevPrice=productPrevPrice[2];
-    Product3.productDiscPrice=productDiscPrice[2];
-    Product Product4=Product();
-    Product4.productImage=productImage[3];
-    Product4.productLabel=productLabel[3];
-    Product4.productRating=productRating[3];
-    Product4.productPrevPrice=productPrevPrice[3];
-    Product4.productDiscPrice=productDiscPrice[3];
-    Product Product5=Product();
-    Product5.productImage=productImage[4];
-    Product5.productLabel=productLabel[4];
-    Product5.productRating=productRating[4];
-    Product5.productPrevPrice=productPrevPrice[4];
-    Product5.productDiscPrice=productDiscPrice[4];
-    Product Product6=Product();
-    Product6.productImage=productImage[5];
-    Product6.productLabel=productLabel[5];
-    Product6.productRating=productRating[5];
-    Product6.productPrevPrice=productPrevPrice[5];
-    Product6.productDiscPrice=productDiscPrice[5];
-    Product Product7=Product();
-    Product7.productImage=productImage[6];
-    Product7.productLabel=productLabel[6];
-    Product7.productRating=productRating[6];
-    Product7.productPrevPrice=productPrevPrice[6];
-    Product7.productDiscPrice=productDiscPrice[6];
-    Product Product8=Product();
-    Product8.productImage=productImage[7];
-    Product8.productLabel=productLabel[7];
-    Product8.productRating=productRating[7];
-    Product8.productPrevPrice=productPrevPrice[7];
-    Product8.productDiscPrice=productDiscPrice[7];
-    Product Product9=Product();
-    Product9.productImage=productImage[8];
-    Product9.productLabel=productLabel[8];
-    Product9.productRating=productRating[8];
-    Product9.productPrevPrice=productPrevPrice[8];
-    Product9.productDiscPrice=productDiscPrice[8];
-    Product Product10=Product();
-    Product10.productImage=productImage[9];
-    Product10.productLabel=productLabel[9];
-    Product10.productRating=productRating[9];
-    Product10.productPrevPrice=productPrevPrice[9];
-    Product10.productDiscPrice=productDiscPrice[9];
-    Product Product11=Product();
-    Product11.productImage=productImage[10];
-    Product11.productLabel=productLabel[10];
-    Product11.productRating=productRating[10];
-    Product11.productPrevPrice=productPrevPrice[10];
-    Product11.productDiscPrice=productDiscPrice[10];
-    Product Product12=Product();
-    Product12.productImage=productImage[11];
-    Product12.productLabel=productLabel[11];
-    Product12.productRating=productRating[11];
-    Product12.productPrevPrice=productPrevPrice[11];
-    Product12.productDiscPrice=productDiscPrice[11];
-    Product Product13=Product();
-    Product13.productImage=productImage[12];
-    Product13.productLabel=productLabel[12];
-    Product13.productRating=productRating[12];
-    Product13.productPrevPrice=productPrevPrice[12];
-    Product13.productDiscPrice=productDiscPrice[12];
-    Product Product14=Product();
-    Product14.productImage=productImage[13];
-    Product14.productLabel=productLabel[13];
-    Product14.productRating=productRating[13];
-    Product14.productPrevPrice=productPrevPrice[13];
-    Product14.productDiscPrice=productDiscPrice[13];
-    Product Product15=Product();
-    Product15.productImage=productImage[14];
-    Product15.productLabel=productLabel[14];
-    Product15.productRating=productRating[14];
-    Product15.productPrevPrice=productPrevPrice[14];
-    Product15.productDiscPrice=productDiscPrice[14];
-    Product Product16=Product();
-    Product16.productImage=productImage[15];
-    Product16.productLabel=productLabel[15];
-    Product16.productRating=productRating[15];
-    Product16.productPrevPrice=productPrevPrice[15];
-    Product16.productDiscPrice=productDiscPrice[15];
-    Product Product17=Product();
-    Product17.productImage=productImage[16];
-    Product17.productLabel=productLabel[16];
-    Product17.productRating=productRating[16];
-    Product17.productPrevPrice=productPrevPrice[16];
-    Product17.productDiscPrice=productDiscPrice[16];
-    Product Product18=Product();
-    Product18.productImage=productImage[17];
-    Product18.productLabel=productLabel[17];
-    Product18.productRating=productRating[17];
-    Product18.productPrevPrice=productPrevPrice[17];
-    Product18.productDiscPrice=productDiscPrice[17];
-    Product Product19=Product();
-    Product19.productImage=productImage[18];
-    Product19.productLabel=productLabel[18];
-    Product19.productRating=productRating[18];
-    Product19.productPrevPrice=productPrevPrice[18];
-    Product19.productDiscPrice=productDiscPrice[18];
-    Product Product20=Product();
-    Product20.productImage=productImage[19];
-    Product20.productLabel=productLabel[19];
-    Product20.productRating=productRating[19];
-    Product20.productPrevPrice=productPrevPrice[19];
-    Product20.productDiscPrice=productDiscPrice[19];
+    Product product1=Product();
+    product1.productImage=productImage[0];
+    product1.productLabel=productLabel[0];
+    product1.productRating=productRating[0];
+    product1.productPrevPrice=productPrevPrice[0];
+    product1.productDiscPrice=productDiscPrice[0];
+    Product product2=Product();
+    product2.productImage=productImage[1];
+    product2.productLabel=productLabel[1];
+    product2.productRating=productRating[1];
+    product2.productPrevPrice=productPrevPrice[1];
+    product2.productDiscPrice=productDiscPrice[1];
+    Product product3=Product();
+    product3.productImage=productImage[2];
+    product3.productLabel=productLabel[2];
+    product3.productRating=productRating[2];
+    product3.productPrevPrice=productPrevPrice[2];
+    product3.productDiscPrice=productDiscPrice[2];
+    Product product4=Product();
+    product4.productImage=productImage[3];
+    product4.productLabel=productLabel[3];
+    product4.productRating=productRating[3];
+    product4.productPrevPrice=productPrevPrice[3];
+    product4.productDiscPrice=productDiscPrice[3];
+    Product product5=Product();
+    product5.productImage=productImage[4];
+    product5.productLabel=productLabel[4];
+    product5.productRating=productRating[4];
+    product5.productPrevPrice=productPrevPrice[4];
+    product5.productDiscPrice=productDiscPrice[4];
+    Product product6=Product();
+    product6.productImage=productImage[5];
+    product6.productLabel=productLabel[5];
+    product6.productRating=productRating[5];
+    product6.productPrevPrice=productPrevPrice[5];
+    product6.productDiscPrice=productDiscPrice[5];
+    Product product7=Product();
+    product7.productImage=productImage[6];
+    product7.productLabel=productLabel[6];
+    product7.productRating=productRating[6];
+    product7.productPrevPrice=productPrevPrice[6];
+    product7.productDiscPrice=productDiscPrice[6];
+    Product product8=Product();
+    product8.productImage=productImage[7];
+    product8.productLabel=productLabel[7];
+    product8.productRating=productRating[7];
+    product8.productPrevPrice=productPrevPrice[7];
+    product8.productDiscPrice=productDiscPrice[7];
+    Product product9=Product();
+    product9.productImage=productImage[8];
+    product9.productLabel=productLabel[8];
+    product9.productRating=productRating[8];
+    product9.productPrevPrice=productPrevPrice[8];
+    product9.productDiscPrice=productDiscPrice[8];
+    Product product10=Product();
+    product10.productImage=productImage[9];
+    product10.productLabel=productLabel[9];
+    product10.productRating=productRating[9];
+    product10.productPrevPrice=productPrevPrice[9];
+    product10.productDiscPrice=productDiscPrice[9];
+    Product product11=Product();
+    product11.productImage=productImage[10];
+    product11.productLabel=productLabel[10];
+    product11.productRating=productRating[10];
+    product11.productPrevPrice=productPrevPrice[10];
+    product11.productDiscPrice=productDiscPrice[10];
+    Product product12=Product();
+    product12.productImage=productImage[11];
+    product12.productLabel=productLabel[11];
+    product12.productRating=productRating[11];
+    product12.productPrevPrice=productPrevPrice[11];
+    product12.productDiscPrice=productDiscPrice[11];
+    Product product13=Product();
+    product13.productImage=productImage[12];
+    product13.productLabel=productLabel[12];
+    product13.productRating=productRating[12];
+    product13.productPrevPrice=productPrevPrice[12];
+    product13.productDiscPrice=productDiscPrice[12];
+    Product product14=Product();
+    product14.productImage=productImage[13];
+    product14.productLabel=productLabel[13];
+    product14.productRating=productRating[13];
+    product14.productPrevPrice=productPrevPrice[13];
+    product14.productDiscPrice=productDiscPrice[13];
+    Product product15=Product();
+    product15.productImage=productImage[14];
+    product15.productLabel=productLabel[14];
+    product15.productRating=productRating[14];
+    product15.productPrevPrice=productPrevPrice[14];
+    product15.productDiscPrice=productDiscPrice[14];
+    Product product16=Product();
+    product16.productImage=productImage[15];
+    product16.productLabel=productLabel[15];
+    product16.productRating=productRating[15];
+    product16.productPrevPrice=productPrevPrice[15];
+    product16.productDiscPrice=productDiscPrice[15];
+    Product product17=Product();
+    product17.productImage=productImage[16];
+    product17.productLabel=productLabel[16];
+    product17.productRating=productRating[16];
+    product17.productPrevPrice=productPrevPrice[16];
+    product17.productDiscPrice=productDiscPrice[16];
+    Product product18=Product();
+    product18.productImage=productImage[17];
+    product18.productLabel=productLabel[17];
+    product18.productRating=productRating[17];
+    product18.productPrevPrice=productPrevPrice[17];
+    product18.productDiscPrice=productDiscPrice[17];
+    Product product19=Product();
+    product19.productImage=productImage[18];
+    product19.productLabel=productLabel[18];
+    product19.productRating=productRating[18];
+    product19.productPrevPrice=productPrevPrice[18];
+    product19.productDiscPrice=productDiscPrice[18];
+    Product product20=Product();
+    product20.productImage=productImage[19];
+    product20.productLabel=productLabel[19];
+    product20.productRating=productRating[19];
+    product20.productPrevPrice=productPrevPrice[19];
+    product20.productDiscPrice=productDiscPrice[19];
     
-    product_list.add(Product1);
-    product_list.add(Product2);
-    product_list.add(Product3);
-    product_list.add(Product4);
-    product_list.add(Product5);
-    product_list.add(Product6);
-    product_list.add(Product7);
-    product_list.add(Product8);
-    product_list.add(Product9);
-    product_list.add(Product10);
-    product_list.add(Product11);
-    product_list.add(Product12);
-    product_list.add(Product13);
-    product_list.add(Product14);
-    product_list.add(Product15);
-    product_list.add(Product16);
-    product_list.add(Product17);
-    product_list.add(Product18);
-    product_list.add(Product19);
-    product_list.add(Product20);
+    productList.add(product1);
+    productList.add(product2);
+    productList.add(product3);
+    productList.add(product4);
+    productList.add(product5);
+    productList.add(product6);
+    productList.add(product7);
+    productList.add(product8);
+    productList.add(product9);
+    productList.add(product10);
+    productList.add(product11);
+    productList.add(product12);
+    productList.add(product13);
+    productList.add(product14);
+    productList.add(product15);
+    productList.add(product16);
+    productList.add(product17);
+    productList.add(product18);
+    productList.add(product19);
+    productList.add(product20);
 
-
-
-    int length= (productLabel.length*.5).toInt();
     return Scaffold(
 
       key: _scaffoldKey,
@@ -353,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child:
         Container(
-          color: Color(0xffe3dbd3),
+          color: const Color(0xffe3dbd3),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
@@ -402,7 +394,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: const Color(0xffc9a697),width: 2,),
-                    color: Color(0xffe3dbd3),
+                    color: const Color(0xffe3dbd3),
                   ),
                   child: TextFormField(
                     decoration: InputDecoration(
@@ -411,7 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       hintText: "Filter",
                       prefixIcon:  InkWell(
                         onTap: (){
-                          Scaffold.of(context).showBottomSheet((context) => FilterBottomSheet());
+                          Scaffold.of(context).showBottomSheet((context) => const FilterBottomSheet());
                           setState(() {
                             _showFilterBottomSheet=true;
                           });
@@ -420,7 +412,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width:15,
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.only(right:0.0),
-                          child: const FaIcon(FontAwesomeIcons.slidersH,size: 15,color: const Color(0xffc9a697)),
+                          child: const FaIcon(FontAwesomeIcons.slidersH,size: 15,color:  Color(0xffc9a697)),
                         ),
                       ),
                       border: InputBorder.none,
@@ -428,10 +420,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 100,
                         padding: const EdgeInsets.only(left:4.0),
                         child: Row(
-                          children: [
-                            const Text("Sort By",style: TextStyle(color:Color(0xffc9a697),)),
-                            const Icon(Icons.arrow_drop_down,size: 22,color: Color(0xffc9a697)),
-                            const Icon(Icons.menu,size: 22,color: const Color(0xffc9a697)),
+                          children: const [
+                            Text("Sort By",style: TextStyle(color:Color(0xffc9a697),)),
+                            Icon(Icons.arrow_drop_down,size: 22,color: Color(0xffc9a697)),
+                            Icon(Icons.menu,size: 22,color: Color(0xffc9a697)),
                           ],
                         ),
                       ),
@@ -455,8 +447,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     childAspectRatio: .75,
                     padding:const EdgeInsets.only(left:14,right:14),
                     // Generate 100 widgets that display their index in the List.
-                    children: List.generate(product_list.length, (index) {
-                      return ProductListItem(product: product_list[index]!);
+                    children: List.generate(productList.length, (index) {
+                      return ProductListItem(product: productList[index]!);
                     }),
                   ),
                 ),

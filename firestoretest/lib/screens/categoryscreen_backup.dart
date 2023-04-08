@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '/models/product.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +15,11 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
 
 
-  bool newest_check=false;
-  bool oldest_check=false;
-  bool price_low_to_high=false;
-  bool price_high_to_low=false;
-  bool best_selling=false;
+  bool newestCheck=false;
+  bool oldestCheck=false;
+  bool priceLowToHigh=false;
+  bool priceHighToLow=false;
+  bool bestSelling=false;
 
 
   List cart=List.of(<Product>{});
@@ -106,7 +105,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       body: SafeArea(
         child: Container(
 
-          color: Color(0xffe3dbd3),
+          color: const Color(0xffe3dbd3),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
@@ -191,7 +190,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                 BoxDecoration(
 
                                                   border: Border.all(
-                                                    color: Color(0xffc9a697),
+                                                    color: const Color(0xffc9a697),
                                                     width: 0,
                                                   ),
                                                   borderRadius: const BorderRadius.all(
@@ -269,7 +268,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                                                   ),
                                                   border: Border.all(
-                                                    color: Color(0xffc9a697),
+                                                    color: const Color(0xffc9a697),
                                                     width: 0,
                                                   ),
                                                   borderRadius: const BorderRadius.all(

@@ -36,6 +36,9 @@
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script>self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;</script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app-check.js"></script>
   <script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
@@ -100,5 +103,6 @@
       loadMainDartJs();
     }
   </script>
+
 </body>
 </html>

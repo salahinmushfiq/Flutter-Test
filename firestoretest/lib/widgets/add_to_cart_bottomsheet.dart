@@ -1,13 +1,7 @@
 import '/models/product.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-
 class AddToCartBottomSheet extends StatefulWidget {
   static String route = "ProductListItem";
-
-
-
   final Product currentlySelectedProduct;
   bool _showAddToCartBottomSheet=true;
 
