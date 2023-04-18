@@ -1,6 +1,5 @@
-import 'package:hardwarehub/globals.dart';
-
-import '/screens/home_screen.dart';
+import 'dart:developer';
+import '/globals.dart';
 import '/screens/signup_screen.dart';
 import '/screens/bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,26 +18,56 @@ class _SignInScreenState extends State<SignInScreen> {
   DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   static UserCredential ?credential;
-  signInWithEmailAndPassword() async{
+  signInWithEmailAndPassword(context) async{
     try {
       UserCredential userCredential = await FirebaseAuth
           .instance.signInWithEmailAndPassword(
-        email: user_mail_controller.text,
-        password: user_password_controller.text,
+        email: userMailController.text,
+        password: userPasswordController.text,
       ).then((value) => credential=value);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(backgroundColor:Color(0xff979797),content: Text("Sign In Successful",style: TextStyle(color:Color(0xff343148)))));
+      ScaffoldMessenger.of( context)
+          .showSnackBar(
+          const SnackBar(backgroundColor: Color(0xff343148),
+              content: Text("Sign In Successful",
+                  style: TextStyle(color: Color(0xffe3dbd3))),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(10))),
+              behavior: SnackBarBehavior.floating,
+              margin: EdgeInsets.all(30.0),
+              elevation: 2
+              ,dismissDirection: DismissDirection.startToEnd));
+
       Globals.userCredential=userCredential;
+      await Future.delayed(const Duration(seconds: 1));
       Navigator.pushNamed(context, BottomBar.route);
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(backgroundColor:Color(0xff979797),content: Text("No user found for that email.")));
-
+        ScaffoldMessenger.of( context)
+            .showSnackBar(
+            const SnackBar(backgroundColor: Color(0xff343148),
+                content: Text("No user found for that email.",
+                    style: TextStyle(color: Color(0xffe3dbd3))),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(10))),
+                behavior: SnackBarBehavior.floating,
+                margin: EdgeInsets.all(30.0),
+                elevation: 2,dismissDirection: DismissDirection.startToEnd));
       } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(backgroundColor:Color(0xff979797),content: Text("Wrong password provided for that user.")));
+        ScaffoldMessenger.of( context)
+            .showSnackBar(
+            const SnackBar(backgroundColor: Color(0xff343148),
+                content: Text("Wrong password provided for that user.",
+                    style: TextStyle(color: Color(0xffe3dbd3))),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(10))),
+                behavior: SnackBarBehavior.floating,
+                margin: EdgeInsets.all(30.0),
+                elevation: 2,dismissDirection: DismissDirection.startToEnd));
+
       }
     }
   }
@@ -46,10 +75,10 @@ class _SignInScreenState extends State<SignInScreen> {
 
 
   late bool _passwordVisible=false;
-  TextEditingController user_name_controller= TextEditingController();
-  TextEditingController user_mail_controller= TextEditingController();
-  TextEditingController user_password_controller= TextEditingController();
-  TextEditingController user_confirm_password_controller= TextEditingController();
+  TextEditingController userNameController= TextEditingController();
+  TextEditingController userMailController= TextEditingController();
+  TextEditingController userPasswordController= TextEditingController();
+  TextEditingController userConfirmPasswordController= TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -106,7 +135,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                           child: TextFormField(
 
-                               controller: user_mail_controller,
+                               controller: userMailController,
                                decoration: const InputDecoration(
                                hintText: "Mail",
                                prefixIcon: Icon(Icons.mail),
@@ -125,7 +154,7 @@ class _SignInScreenState extends State<SignInScreen> {
                            color: const Color(0xffe3dbd3),
                          ),
                           child: TextFormField(
-                            controller: user_password_controller,
+                            controller: userPasswordController,
 
                             keyboardType: TextInputType.text,
 
@@ -164,15 +193,15 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: ElevatedButton(
 
                     onPressed: (){
-                      print(user_mail_controller.text);
-                      print(user_password_controller.text);
+                      log(userMailController.text.toLowerCase());
+                      log(userPasswordController.text);
 
 
 
-                      signInWithEmailAndPassword();
+                      signInWithEmailAndPassword(context);
 
                     },
-                    child :const Text('Login',style:const TextStyle(color: Color(0xffa17e66),fontWeight: FontWeight.w700,fontSize: 18),
+                    child :const Text('Login',style:TextStyle(color: Color(0xffa17e66),fontWeight: FontWeight.w700,fontSize: 18),
                     ),
                   ),
               ),

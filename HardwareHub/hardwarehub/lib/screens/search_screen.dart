@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:hardwarehub/globals.dart';
 import 'package:hardwarehub/models/Equipment.dart';
 
-import 'setting_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   static String route = 'SearchScreen';
@@ -123,7 +122,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         else if(snapshot1.connectionState ==ConnectionState.active && snapshot1.data!.snapshot!.value!=null){
                           log("Active State");
                           log("Data Has been Found");
-                          log("Data Length: ${snapshot1.data!.snapshot!.value!.length-2}");
+
+                          log("Data Length: ${snapshot1.data!.snapshot!.value!.length-1}");
                           return ListView.builder(
                               itemBuilder: (context, index)
                               {

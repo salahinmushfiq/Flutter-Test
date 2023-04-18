@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final equipments = equipmentsFromJson(jsonString);
-
 import 'dart:convert';
 
 // Equipments equipmentsFromJson(String str) => Equipments.fromJson(json.decode(str));
@@ -21,6 +17,7 @@ class Equipments {
     required this.equipmentId,
     required this.categoryId,
     required this.equipmentType,
+    required this.doorNo,
   });
 
   String studentId;
@@ -32,6 +29,7 @@ class Equipments {
   bool availability;
   String equipmentId;
   int categoryId;
+  int doorNo;
   String equipmentType;
 
   factory Equipments.fromJson(Map<String, dynamic> json) => Equipments(
@@ -45,6 +43,7 @@ class Equipments {
     equipmentId: json["equipmentID"],
     categoryId: json["categoryID"],
     equipmentType: json["equipmentType"],
+    doorNo: json["doorNo"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -58,6 +57,7 @@ class Equipments {
     "equipmentID": equipmentId,
     "categoryID": categoryId,
     "equipmentType": equipmentType,
+    "doorNo":doorNo,
   };
 }
 
@@ -72,7 +72,8 @@ class Equipment {
     required this.takenOn,
     required this.equipmentImageName,
     required this.scanID,
-    required this.categoryID
+    required this.categoryID,
+    required this.doorNo
   });
 
   bool availability;
@@ -85,6 +86,7 @@ class Equipment {
   String equipmentImageName;
   String scanID;
   int categoryID;
+  int doorNo;
 
 
   factory Equipment.fromJson(Map<dynamic, dynamic> json) => Equipment(
@@ -98,6 +100,7 @@ class Equipment {
     equipmentImageName: json["equipmentImageName"],
     scanID: json["scanID"],
     categoryID: json["categoryID"],
+    doorNo: json["doorNo"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -110,6 +113,7 @@ class Equipment {
     "takenOn": takenOn.toIso8601String(),
     "equipmentImageName": equipmentImageName,
     "scanID": scanID,
-    "categoryID": categoryID
+    "categoryID": categoryID,
+    "doorNo": doorNo,
   };
 }

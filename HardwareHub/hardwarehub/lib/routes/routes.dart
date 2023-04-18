@@ -1,14 +1,9 @@
-
 import '/screens/dashboard_screen.dart';
-
 import '/screens/cart_screen.dart';
 import '/screens/category_screen.dart';
-
 import '/screens/signup_screen.dart';
 import '/screens/bottom_bar.dart';
-
 import '/screens/signin_screen.dart';
-import '/screens/home_screen.dart';
 import '/screens/search_screen.dart';
 
 

@@ -160,7 +160,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                             log("Data Has been Found");
                             // log(snapshot2.data.docs[1]['categoryLabel'].toString());
-                            log("Data Length: "+snapshot1.data.docs.length.toString());
+                            log("Data Length: ${snapshot1.data.docs.length}");
 
                             return GridView.count(
                               // Create a grid with 2 columns. If you change the scrollDirection to
@@ -176,7 +176,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     getCategoryImageDownloadUrl("category_images",snapshot1.data!.docs[index]['categoryImage']),
                                     builder: (context, snapshot2) {
                                       if(snapshot2.hasData){
-                                        log("check future builder: "+snapshot2.data.toString());
+                                        log("check future builder: ${snapshot2.data}");
 
                                         if(snapshot2.connectionState ==ConnectionState.waiting){
                                           return Stack(
@@ -303,13 +303,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                         right: 30,
                                                         bottom: 20,
                                                         top: 20),
-
-                                                    child: Text(
-                                                      snapshot1.data!
-                                                          .docs[index]['categoryLabel'],
-                                                      style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight.w500),),
                                                     decoration: const BoxDecoration(
                                                       color: Color(0xffc4a494),
                                                       borderRadius: BorderRadius.only(
@@ -318,6 +311,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                               5)),
 
                                                     ),
+
+                                                    child: Text(
+                                                      snapshot1.data!
+                                                          .docs[index]['categoryLabel'],
+                                                      style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight: FontWeight.w500),),
                                                   ),
                                                 ),
                                               ),

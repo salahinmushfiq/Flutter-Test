@@ -178,6 +178,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             log("Data Has been Found");
                             // log(snapshot2.data.docs[1]['categoryLabel'].toString());
                             log("Data Length: ${snapshot1.data!.snapshot!.value!.length}");
+
+    // studentsRef.once().then((event) {
+    // log("Student fetching started");
+    // var currentStudentQuery=event.snapshot.children.singleWhere((element) =>
+    //
+    // Student.fromJson(element.value as Map).uid==Globals.userCredential.user!.uid
+    // );
+    //
+    // Student currStudent=Student.fromJson(currentStudentQuery.value as Map);
+    // var currStudentKey=currentStudentQuery.key;
+    // log("Student Name: ${currStudent.name} Key:${currStudentKey.toString()}");
                             return ListView.builder(
                                 itemCount: snapshot1.data!.snapshot!.value!.length,
                                 scrollDirection: Axis.horizontal,
@@ -379,7 +390,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             List.generate(snapshot1.data!.snapshot!.value!.length, (index) {
                               if(snapshot1.data!.snapshot!.value != null && snapshot1.data!.snapshot!.value[index]!=null)
                                 {
-                                  log("why null: ${snapshot1.data!.snapshot!.value!}");
+                                  log("Value Check: ${snapshot1.data!.snapshot!.value!}");
                                   Equipment currEquipment=Equipment(
                                       availability: snapshot1.data!.snapshot!.value[index]["availability"],
                                       availableOn: DateTime.parse(snapshot1.data!.snapshot!.value[index]["availableOn"]),
@@ -390,7 +401,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       takenOn: DateTime.parse(snapshot1.data!.snapshot!.value[index]["takenOn"]),
                                       equipmentImageName: snapshot1.data!.snapshot!.value[index]["equipmentImageName"],
                                       scanID: snapshot1.data!.snapshot!.value[index]["scanID"],
-                                      categoryID: snapshot1.data!.snapshot!.value[index]["categoryID"] );
+                                      categoryID: snapshot1.data!.snapshot!.value[index]["categoryID"],
+                                      doorNo: snapshot1.data!.snapshot!.value[index]["doorNo"]
+                                  );
 
                                   return FutureBuilder(
                                       future: getEquipmentsImageDownloadUrl("equipmentImages",currEquipment.equipmentImageName),
@@ -483,25 +496,45 @@ class _CategoryScreenState extends State<CategoryScreen> {
     }
   }
   getEquipmentsData(String collection) {
-
+    Stream<DatabaseEvent> something;
     if(categoryId==0)
     {
       log("category id: $categoryId");
       try {
-        return FirebaseDatabase.instance
+        something= FirebaseDatabase.instance
             .ref()
             .child('equipments').orderByChild("categoryID").equalTo(0).onValue;
+        log("InActiveListener: ${something.toString()}");
+        return something;
       }on Exception catch (e) {
         log(e.toString());
       }
     }
     else{
       log("category id: $categoryId DataType: ${categoryId.runtimeType}");
+
       try {
-        Stream<DatabaseEvent> something;
-        return something=FirebaseDatabase.instance
+
+        something=FirebaseDatabase.instance
             .ref()
             .child('equipments').orderByChild("categoryID").equalTo(categoryId).onValue;
+        log("InActiveListener: ${something.toString()}");
+
+        var something2=FirebaseDatabase.instance
+            .ref()
+            .child('equipments').orderByChild("categoryID").equalTo(categoryId).onValue.listen((event){
+              event.snapshot.children.where((element) => Equipment.fromJson(element.value as Map).categoryID==categoryId);
+        });
+        log("Filtered: ${something2.toString()}");
+
+        //.then((event) {
+        //               setState(() {
+        //                 widget._showReceiveEquipmentBottomSheet = false;
+        //               });
+        //               log("Equipment fetching started");
+        //               var selectedEquipmentQuery=event.snapshot.children.singleWhere((element) =>
+        return something;
+
       }on Exception catch (e) {
         log(e.toString());
       }
@@ -510,20 +543,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   void _activateListeners() {
-    FirebaseDatabase.instance
+    var value =FirebaseDatabase.instance
         .ref()
         .child('equipments').onValue.listen((event) {
-          log("Reached");
-          event.snapshot.children.map((e){
-            Equipment equipment=Equipment.fromJson(e.value as Map);
+            event.snapshot.children.where((element){
+            Equipment equipment=Equipment.fromJson(element.value as Map);
             log("Listener: ${equipment.equipmentName}");
 
-            log("Type: ${e.toString()}");
-          }).toList();
-
-
-          // log("Listener: ${event.snapshot.value}");
+            log("Type: ${element.toString()}");
+            return true;
+          });
         });
+
+    log("ActiveListener: ${value.toString()}");
   }
 }
 getEquipmentsImageDownloadUrl(String child1, child2) {

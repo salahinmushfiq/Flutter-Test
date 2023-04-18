@@ -45,7 +45,7 @@ class _EquipmentListItemHorizontalState extends State<EquipmentListItemHorizonta
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
-                      Text(widget.equipment.studentID.toString(), style: const TextStyle(color:Colors.white,fontSize: 15, fontWeight: FontWeight.w600)),
+                      widget.equipment.availability==false?Text(widget.equipment.studentID.toString(), style: const TextStyle(color:Colors.white,fontSize: 15, fontWeight: FontWeight.w600)):const Text("In Lab", style: TextStyle(color:Colors.green,fontSize: 15, fontWeight: FontWeight.w600)),
 
                      Text(
                             DateFormat('yyyy-MM-dd').format(widget.equipment.availableOn.toUtc()).toString(),

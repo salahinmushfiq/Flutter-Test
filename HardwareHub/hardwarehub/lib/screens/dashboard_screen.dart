@@ -60,12 +60,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    var list = [];
-    List item=[];
     return Scaffold(
-
-      // key: _scaffoldKey,
-
       body: SafeArea(
         child:
         Container(
@@ -386,7 +381,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               takenOn: DateTime.parse(snapshot1.data!.snapshot!.value[index]["takenOn"]),
                               equipmentImageName: snapshot1.data!.snapshot!.value[index]["equipmentImageName"],
                               scanID: snapshot1.data!.snapshot!.value[index]["scanID"],
-                              categoryID: snapshot1.data!.snapshot!.value[index]["categoryID"]) ;
+                              categoryID: snapshot1.data!.snapshot!.value[index]["categoryID"],
+                              doorNo: snapshot1.data!.snapshot!.value[index]["doorNo"]
+                              ) ;
                               log("Equipment: $currEquipment");
 
                               // var currEquipment= Equipment.fromJson(snapshot1.data.snapshot.value.values.elementAt(index)).toString();

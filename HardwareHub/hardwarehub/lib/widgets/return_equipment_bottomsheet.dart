@@ -24,7 +24,7 @@ class _ReturnEquipmentBottomSheetState extends State<ReturnEquipmentBottomSheet>
     Container(
         height:140,
         decoration: const BoxDecoration(
-          color: Colors.green,
+          color: Color(0xff343148),
           borderRadius: BorderRadius.only(topLeft: Radius.circular(4),topRight: Radius.circular(4)),
 
           border:Border(
@@ -49,7 +49,7 @@ class _ReturnEquipmentBottomSheetState extends State<ReturnEquipmentBottomSheet>
               child: Center(
                 child: Card(
                   elevation: 0,
-                  color: Colors.green,
+                  color: const Color(0xff343148),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.0),
                   ),
@@ -95,10 +95,10 @@ class _ReturnEquipmentBottomSheetState extends State<ReturnEquipmentBottomSheet>
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(widget.currentlySelectedEquipments.equipmentName.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color:const Color(0xff343148)),),
-                                Text("Current Time: ${DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now())}", style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color:const Color(0xff343148)),),
-                                Text("Receive Time: ${DateFormat('dd-MM-yyyy HH:mm:ss').format(widget.currentlySelectedEquipments.takenOn)}", style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color:const Color(0xff343148)),),
-                                Text("Total In posession: ${DateTime.now().difference(widget.currentlySelectedEquipments.takenOn).inDays} Days", style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color:const Color(0xff343148)),)
+                                Text(widget.currentlySelectedEquipments.equipmentName.toString(), style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color:Color(0xffc9a697)),),
+                                Text("Current Time: ${DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now())}", style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color:Color(0xffc9a697)),),
+                                Text("Receive Time: ${DateFormat('dd-MM-yyyy HH:mm:ss').format(widget.currentlySelectedEquipments.takenOn)}", style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color:Color(0xffc9a697)),),
+                                Text("In Possession for: ${DateTime.now().difference(widget.currentlySelectedEquipments.takenOn).inDays} Days", style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color:Color(0xffc9a697)),)
                               ],
                             ),
                       ),

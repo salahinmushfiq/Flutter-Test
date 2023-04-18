@@ -67,6 +67,16 @@ class _EquipmentListItemState extends State<EquipmentListItem> {
 // color: Colors.green,
             ),
           ),
+          Flexible(
+            flex:1,
+            child: Container(
+
+              width:double.infinity*.5,
+              padding: const EdgeInsets.only(left:8,right:8,),
+              child: Text("Door No.: ${widget.equipment.doorNo.toString()}",style: const TextStyle(color: Color(0xff222455),fontWeight: FontWeight.w500,fontSize: 14),softWrap: true,overflow: TextOverflow.visible,maxLines: 2,),
+// color: Colors.green,
+            ),
+          ),
           const SizedBox(height:5),
           Flexible(
             flex:1,
@@ -80,7 +90,7 @@ class _EquipmentListItemState extends State<EquipmentListItem> {
                 children: [
                   widget.equipment.availability? const Text("Available" ,
                       style: TextStyle(color: Color(0xff50C878),fontWeight: FontWeight.w700)
-                  ):Text("Available in ${widget.equipment.availableOn.difference(widget.equipment.takenOn).inDays} Days",
+                  ):Text("Available in ${widget.equipment.availableOn.difference(DateTime.now()).inDays} Days",
                       style: const TextStyle(color: Color(0xffF5A623),fontWeight: FontWeight.w700)
                   ),
 
