@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:hardwarehub/models/Equipment.dart';
 import 'package:hardwarehub/widgets/receive_equipment_bottomsheet.dart';
 import 'package:hardwarehub/widgets/return_equipment_bottomsheet.dart';
+import '../globals.dart';
+import '../models/Student.dart';
 import '/widgets/add_to_cart_bottomsheet.dart';
 import 'package:flutter/material.dart';
 
@@ -152,45 +154,40 @@ class _EquipmentListItemState extends State<EquipmentListItem> {
               ),
               const SizedBox(width: 2),
               Expanded(
-                flex: 1,
-                child: InkWell(
-                  onTap: (){
-                    Scaffold.of(context).showBottomSheet((context) => ReturnEquipmentBottomSheet(currentlySelectedEquipments: widget.equipment));
-                  },
-                  child: Container(
-                    // style: ElevatedButton.styleFrom(
-                    //   // primary: Colors.deepOrangeAccent,
-                    //     primary: Color(0xffe3dbd3),
-                    //     elevation: 5.0,
-                    //     fixedSize: Size(120, 10),
-                    //     side: BorderSide(width: 2.0, color: Color(0xffc9a697))),
-                    //   width:double.infinity*.25,
-                      width:80,
-                      padding: const EdgeInsets.all(6.0),
-                      decoration: const BoxDecoration(
-                        color:Colors.green,
-                        // border: Border.all(color:Color(0xffa17e66),width:1.75),
-                        borderRadius: BorderRadius.only(bottomRight:Radius.circular(4)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 1,
-                            offset: Offset(2, 3), // Shadow position
-                          ),
-                          BoxShadow(
-                            color: Color(0xffe3dbd3),
-                            blurRadius: 3,
-                            offset: Offset(-1, 0), // Shadow position
-                          ),
-                        ],
+                  flex: 1,
+                  child: InkWell(
+                    onTap: (){
+                      Scaffold.of(context).showBottomSheet((context) => AddToCartBottomSheet(currentlySelectedEquipments: widget.equipment));
+                    },
+                    child: Container(
+                        width:80,
+                        padding: const EdgeInsets.all(6.0),
+                        decoration: const BoxDecoration(
+                          color:Colors.red,
+                          // border: Border.all(color:Color(0xffa17e66),width:1.75),
+                          borderRadius: BorderRadius.only(bottomRight:Radius.circular(4)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 1,
+                              offset: Offset(2, 3), // Shadow position
+                            ),
+                            BoxShadow(
+                              color: Color(0xffe3dbd3),
+                              blurRadius: 3,
+                              offset: Offset(-1, 0), // Shadow position
+                            ),
+                          ],
 
-                      ),
-                      child: const Text("Return",style: TextStyle(color: Color(0xff343148),fontWeight: FontWeight.w700,fontSize: 14,),textAlign: TextAlign.center,)
+                        ),
+                        child: const Text("Cancel",style: TextStyle(color: Color(0xff343148),fontWeight: FontWeight.w700,fontSize: 14,),textAlign: TextAlign.center,)
+                    ),
                   ),
-                ),
-              )
+                )
             ],),
-          ):SizedBox(
+          ):
+          (Student.fromJson(Globals.currentlySignedInStudentSnapshot.value as Map).studentID!=widget.equipment.studentID)?
+          SizedBox(
             width:double.infinity*.5,
             child: Row(
 
@@ -246,6 +243,47 @@ class _EquipmentListItemState extends State<EquipmentListItem> {
                       Scaffold.of(context).showBottomSheet((context) => AddToCartBottomSheet(currentlySelectedEquipments: widget.equipment));
                     },
                     child: Container(
+                        width:80,
+                        padding: const EdgeInsets.all(6.0),
+                        decoration: const BoxDecoration(
+                          color:Colors.red,
+                          // border: Border.all(color:Color(0xffa17e66),width:1.75),
+                          borderRadius: BorderRadius.only(bottomRight:Radius.circular(4)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 1,
+                              offset: Offset(2, 3), // Shadow position
+                            ),
+                            BoxShadow(
+                              color: Color(0xffe3dbd3),
+                              blurRadius: 3,
+                              offset: Offset(-1, 0), // Shadow position
+                            ),
+                          ],
+
+                        ),
+                        child: const Text("Cancel",style: TextStyle(color: Color(0xff343148),fontWeight: FontWeight.w700,fontSize: 14,),textAlign: TextAlign.center,)
+                    ),
+                  ),
+                )
+              ],),
+          ):
+          SizedBox(
+            width:double.infinity*.5,
+            child: Row(
+
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+
+                Expanded(
+                  flex: 1,
+                  child: InkWell(
+                    onTap: (){
+                      Scaffold.of(context).showBottomSheet((context) => ReturnEquipmentBottomSheet(currentlyClickedEquipment: widget.equipment));
+                    },
+                    child: Container(
                       // style: ElevatedButton.styleFrom(
                       //   // primary: Colors.deepOrangeAccent,
                       //     primary: Color(0xffe3dbd3),
@@ -253,6 +291,38 @@ class _EquipmentListItemState extends State<EquipmentListItem> {
                       //     fixedSize: Size(120, 10),
                       //     side: BorderSide(width: 2.0, color: Color(0xffc9a697))),
                       //   width:double.infinity*.25,
+                        width:80,
+                        padding: const EdgeInsets.all(6.0),
+                        decoration: const BoxDecoration(
+                          color:Colors.green,
+                          // border: Border.all(color:Color(0xffa17e66),width:1.75),
+                          borderRadius: BorderRadius.only(bottomRight:Radius.circular(4)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 1,
+                              offset: Offset(2, 3), // Shadow position
+                            ),
+                            BoxShadow(
+                              color: Color(0xffe3dbd3),
+                              blurRadius: 3,
+                              offset: Offset(-1, 0), // Shadow position
+                            ),
+                          ],
+
+                        ),
+                        child: const Text("Return",style: TextStyle(color: Color(0xff343148),fontWeight: FontWeight.w700,fontSize: 14,),textAlign: TextAlign.center,)
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 2),
+                Expanded(
+                  flex: 1,
+                  child: InkWell(
+                    onTap: (){
+                      Scaffold.of(context).showBottomSheet((context) => AddToCartBottomSheet(currentlySelectedEquipments: widget.equipment));
+                    },
+                    child: Container(
                         width:80,
                         padding: const EdgeInsets.all(6.0),
                         decoration: const BoxDecoration(
@@ -280,75 +350,6 @@ class _EquipmentListItemState extends State<EquipmentListItem> {
               ],),
           )
 
-          // widget.equipment.availability ? InkWell(
-          //   onTap: (){
-          //     Scaffold.of(context).showBottomSheet((context) => AddToCartBottomSheet(currentlySelectedEquipments: widget.equipment));
-          //   },
-          //   child: Container(
-          //     // style: ElevatedButton.styleFrom(
-          //     //   // primary: Colors.deepOrangeAccent,
-          //     //     primary: Color(0xffe3dbd3),
-          //     //     elevation: 5.0,
-          //     //     fixedSize: Size(120, 10),
-          //     //     side: BorderSide(width: 2.0, color: Color(0xffc9a697))),
-          //       width:double.infinity*.5,
-          //       padding: const EdgeInsets.all(6.0),
-          //       decoration: const BoxDecoration(
-          //         color:Color(0xff343148),
-          //         // border: Border.all(color:Color(0xffa17e66),width:1.75),
-          //         borderRadius: BorderRadius.only(bottomLeft:Radius.circular(4),bottomRight:Radius.circular(4)),
-          //         boxShadow: [
-          //           BoxShadow(
-          //             color: Colors.black12,
-          //             blurRadius: 1,
-          //             offset: Offset(2, 3), // Shadow position
-          //           ),
-          //           BoxShadow(
-          //             color: Color(0xffe3dbd3),
-          //             blurRadius: 3,
-          //             offset: Offset(-1, 0), // Shadow position
-          //           ),
-          //         ],
-          //
-          //       ),
-          //
-          //       child: const Text("Select",style: TextStyle(color: Color(0xffD7C49E),fontWeight: FontWeight.w700,fontSize: 14,),textAlign: TextAlign.center,)
-          //   ),
-          // ):
-          // InkWell(
-          //   onTap: (){
-          //     Scaffold.of(context).showBottomSheet((context) => AddToCartBottomSheet(currentlySelectedEquipments: widget.equipment));
-          //   },
-          //   child: Container(
-          //     // style: ElevatedButton.styleFrom(
-          //     //   // primary: Colors.deepOrangeAccent,
-          //     //     primary: Color(0xffe3dbd3),
-          //     //     elevation: 5.0,
-          //     //     fixedSize: Size(120, 10),
-          //     //     side: BorderSide(width: 2.0, color: Color(0xffc9a697))),
-          //       width:double.infinity*.5,
-          //       padding: const EdgeInsets.all(6.0),
-          //       decoration: const BoxDecoration(
-          //         color:Color(0xffF5A623),
-          //         // border: Border.all(color:Color(0xffa17e66),width:1.75),
-          //         borderRadius: BorderRadius.only(bottomLeft:Radius.circular(4),bottomRight:Radius.circular(4)),
-          //         boxShadow: [
-          //           BoxShadow(
-          //             color: Colors.black12,
-          //             blurRadius: 1,
-          //             offset: Offset(2, 3), // Shadow position
-          //           ),
-          //           BoxShadow(
-          //             color: Color(0xffe3dbd3),
-          //             blurRadius: 3,
-          //             offset: Offset(-1, 0), // Shadow position
-          //           ),
-          //         ],
-          //
-          //       ),
-          //       child: const Text("Wait",style: TextStyle(color: Color(0xff343148),fontWeight: FontWeight.w700,fontSize: 14,),textAlign: TextAlign.center,)
-          //   ),
-          // ),
         ],
       ),
     );

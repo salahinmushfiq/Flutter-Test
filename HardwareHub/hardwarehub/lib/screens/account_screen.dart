@@ -46,7 +46,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           alignment: Alignment.center,
                           child: Text(
                             "Account",
-                            style:Theme.of(context).textTheme.headline1,
+                            style:Theme.of(context).textTheme.displayLarge,
                           ),
                         ),
                       ),
@@ -69,17 +69,17 @@ class _AccountScreenState extends State<AccountScreen> {
                   width:80,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    image: const DecorationImage(image:const AssetImage("assets/images/profile_pic.jpeg"),fit: BoxFit.cover),
+                    image: const DecorationImage(image: AssetImage("assets/images/profile_pic.jpeg"),fit: BoxFit.cover),
                   ),
 
 
                 ),
-                const Text("Mitchel",style: const TextStyle(fontWeight: FontWeight.w700,fontSize: 20,color:const Color(0xffc9a697)),),
-                const Text("Aka Maverick",style: const TextStyle(fontWeight: FontWeight.w300,fontSize: 15,color:const Color(0xffc9a697))),
+                const Text("Mitchel",style:  TextStyle(fontWeight: FontWeight.w700,fontSize: 20,color: Color(0xffc9a697)),),
+                const Text("Aka Maverick",style:  TextStyle(fontWeight: FontWeight.w300,fontSize: 15,color: Color(0xffc9a697))),
                 const SizedBox(height:20),
                 ExpansionTileCard(
 
-                    title: const Text("Account",style: const TextStyle(color:const Color(0xffc9a697),fontWeight: FontWeight.w500),),
+                    title: const Text("Account",style:  TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w500),),
                     trailing: const FaIcon(FontAwesomeIcons.chevronDown,color:Color(0xffc9a697),),
                     leading: const FaIcon(FontAwesomeIcons.user,color:Color(0xffc9a697)),
                     children: [
@@ -175,7 +175,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                                   width:80,
                                   alignment: Alignment.center,
-                                  child: InkWell(child: const Text('Cancel',style:const TextStyle(color: Colors.red,fontWeight: FontWeight.w300,fontSize: 18),),
+                                  child: InkWell(child: const Text('Cancel',style: TextStyle(color: Colors.red,fontWeight: FontWeight.w300,fontSize: 18),),
                                     onTap: (){},
                                   )
 
@@ -195,7 +195,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                                   width:80,
                                   alignment: Alignment.center,
-                                  child: InkWell(child: const Text('Save',style:const TextStyle(color: Colors.green,fontWeight: FontWeight.w700,fontSize: 18),),
+                                  child: InkWell(child: const Text('Save',style: TextStyle(color: Colors.green,fontWeight: FontWeight.w700,fontSize: 18),),
                                     onTap: (){},
                                   )
 
@@ -206,9 +206,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
 
               ],),
-                ExpansionTileCard(title: const Text("Password",style: const TextStyle(color:const Color(0xffc9a697),fontWeight: FontWeight.w500),),
-                  trailing: const FaIcon(FontAwesomeIcons.chevronDown,color:const Color(0xffc9a697),),
-                  leading: const FaIcon(FontAwesomeIcons.lock,color:const Color(0xffc9a697)),
+                ExpansionTileCard(title: const Text("Password",style: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w500),),
+                  trailing: const FaIcon(FontAwesomeIcons.chevronDown,color: Color(0xffc9a697),),
+                  leading: const FaIcon(FontAwesomeIcons.lock,color: Color(0xffc9a697)),
 
                   children: [
                   Container(
@@ -301,7 +301,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                                 width:80,
                                 alignment: Alignment.center,
-                                child: InkWell(child: const Text('Cancel',style:const TextStyle(color: Colors.red,fontWeight: FontWeight.w300,fontSize: 18),),
+                                child: InkWell(child: const Text('Cancel',style: TextStyle(color: Colors.red,fontWeight: FontWeight.w300,fontSize: 18),),
                                   onTap: (){},
                                 )
 
@@ -321,7 +321,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                                 width:80,
                                 alignment: Alignment.center,
-                                child: InkWell(child: const Text('Save',style:const TextStyle(color: Colors.green,fontWeight: FontWeight.w700,fontSize: 18),),
+                                child: InkWell(child: const Text('Save',style: TextStyle(color: Colors.green,fontWeight: FontWeight.w700,fontSize: 18),),
                                   onTap: (){},
                                 )
 
@@ -348,7 +348,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: TextFormField(
                         decoration: const InputDecoration(
                           hintText: "Email",
-                          prefixIcon: const Icon(Icons.person),
+                          prefixIcon: Icon(Icons.person),
                           border: InputBorder.none,
                         ),
                       ),
@@ -380,7 +380,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                         decoration: const InputDecoration(
                           hintText: "Street Address",
-                          prefixIcon: const Icon(Icons.mail),
+                          prefixIcon: Icon(Icons.mail),
                           border: InputBorder.none,
                         ),
                       ),
@@ -412,7 +412,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                         decoration: const InputDecoration(
                           hintText: "Zip Code",
-                          prefixIcon: const Icon(Icons.mail),
+                          prefixIcon: Icon(Icons.mail),
                           border: InputBorder.none,
                         ),
                       ),
@@ -441,7 +441,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                                 width:80,
                                 alignment: Alignment.center,
-                                child: InkWell(child: const Text('Cancel',style:const TextStyle(color: Colors.red,fontWeight: FontWeight.w300,fontSize: 18),),
+                                child: InkWell(child: const Text('Cancel',style: TextStyle(color: Colors.red,fontWeight: FontWeight.w300,fontSize: 18),),
                                   onTap: (){},
                                 )
 
@@ -461,7 +461,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                                 width:80,
                                 alignment: Alignment.center,
-                                child: InkWell(child: const Text('Save',style:const TextStyle(color: Colors.green,fontWeight: FontWeight.w700,fontSize: 18),),
+                                child: InkWell(child: const Text('Save',style: TextStyle(color: Colors.green,fontWeight: FontWeight.w700,fontSize: 18),),
                                   onTap: (){},
                                 )
 

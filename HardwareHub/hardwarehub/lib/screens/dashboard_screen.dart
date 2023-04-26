@@ -8,6 +8,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:hardwarehub/widgets/equipmentListItem.dart';
 
+import '../models/Student.dart';
+
 
 class DashboardScreen extends StatefulWidget {
   static String route = "DashboardScreen";
@@ -21,7 +23,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   // late PersistentBottomSheetController _controller; // <------ Instance variable
-
+  DatabaseReference studentsRef = FirebaseDatabase.instance.ref("students");
+  late Student currentStudent;
   bool newestCheck=false;
   bool oldestCheck=false;
   bool availableCheck=false;
@@ -44,7 +47,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   double heightOfModalBottomSheet=200;
 
   var equipmentData;
-  // Product currentlySelectedProduct=Product(productImage: null);
   void addToCart(Equipment product) {
     setState(() {
       cart.add(product);
@@ -320,7 +322,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         width:15,
                         alignment: Alignment.centerLeft,
                         padding: const EdgeInsets.only(right:0.0),
-                        child: const FaIcon(FontAwesomeIcons.slidersH,size: 15,color:  Color(0xff343148)),
+                        child: const FaIcon(FontAwesomeIcons.sliders,size: 15,color:  Color(0xff343148)),
                       ),
                     ),
                     border: InputBorder.none,
@@ -331,113 +333,103 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 flex:14,
                 child: StreamBuilder(
                     stream: equipmentData.onValue,
-                    builder: (context,AsyncSnapshot snapshot1) {
-                      if(snapshot1.hasData){
-                        if(snapshot1.connectionState ==ConnectionState.waiting){
+                    builder: (context,AsyncSnapshot equipmentDataSnapshot) {
+                      if(equipmentDataSnapshot.hasData){
+                        if(equipmentDataSnapshot.connectionState ==ConnectionState.waiting){
                           log("waiting for data");
                           return const Center(
                             child:
                             Center(
-                              child: CircularProgressIndicator(color: Color(0xffc9a697)),
+                              child: CircularProgressIndicator(color: Color(0xff343148)),
                             ),
                           );
                         }
-                        else if(snapshot1.connectionState ==ConnectionState.none){
+                        else if(equipmentDataSnapshot.connectionState ==ConnectionState.none){
                           return const Text("Connection State None");
                         }
-                        else if(snapshot1.connectionState ==ConnectionState.active) {
+                        else if(equipmentDataSnapshot.connectionState ==ConnectionState.active) {
                           log("Active State");
                           log("Data Has been Found");
-                          // log(snapshot2.data.docs[1]['categoryLabel'].toString());
-                          log("Data Length: ${snapshot1.data!.snapshot!.value!
+                          // log(equipmentImageSnapshot.data.docs[1]['categoryLabel'].toString());
+                          log("Data Length: ${equipmentDataSnapshot.data!.snapshot!.value!
                               .length}");
-
-
                           return GridView.count(
                             crossAxisCount: 2,
                             shrinkWrap: true,
-
                             scrollDirection: Axis.vertical,
                             childAspectRatio: .6,
                             mainAxisSpacing: 8,
                             // Generate 100 widgets that display their index in the List.
-
-
                             children:
                              List.generate(
-                                snapshot1.data!.snapshot!.value!.length, (index) {
+                                equipmentDataSnapshot.data!.snapshot!.value!.length, (index) {
 
-                              if(snapshot1.data!.snapshot!.value[index]!=null){
-                              log("Equipment: ${snapshot1.data!.snapshot!.value[index]}");
-                              log("Type: ${snapshot1.data!.snapshot!.value[index].runtimeType}");
+                                if(equipmentDataSnapshot.data!.snapshot!.value[index]!=null){
+                                  log("Equipment: ${equipmentDataSnapshot.data!.snapshot!.value[index]}");
+                                  log("Type: ${equipmentDataSnapshot.data!.snapshot!.value[index].runtimeType}");
 
-                              Equipment currEquipment=Equipment(
-                              availability: snapshot1.data!.snapshot!.value[index]["availability"],
-                              availableOn: DateTime.parse(snapshot1.data!.snapshot!.value[index]["availableOn"]),
-                              equipmentID:snapshot1.data!.snapshot!.value[index]["equipmentID"] ,
-                              equipmentName: snapshot1.data!.snapshot!.value[index]["equipmentName"],
-                              equipmentType: snapshot1.data!.snapshot!.value[index]["equipmentType"],
-                              studentID: snapshot1.data!.snapshot!.value[index]["studentID"],
-                              takenOn: DateTime.parse(snapshot1.data!.snapshot!.value[index]["takenOn"]),
-                              equipmentImageName: snapshot1.data!.snapshot!.value[index]["equipmentImageName"],
-                              scanID: snapshot1.data!.snapshot!.value[index]["scanID"],
-                              categoryID: snapshot1.data!.snapshot!.value[index]["categoryID"],
-                              doorNo: snapshot1.data!.snapshot!.value[index]["doorNo"]
-                              ) ;
-                              log("Equipment: $currEquipment");
+                                  Equipment currEquipment=Equipment(
+                                  availability: equipmentDataSnapshot.data!.snapshot!.value[index]["availability"],
+                                  availableOn: DateTime.parse(equipmentDataSnapshot.data!.snapshot!.value[index]["availableOn"]),
+                                  equipmentID:equipmentDataSnapshot.data!.snapshot!.value[index]["equipmentID"] ,
+                                  equipmentName: equipmentDataSnapshot.data!.snapshot!.value[index]["equipmentName"],
+                                  equipmentType: equipmentDataSnapshot.data!.snapshot!.value[index]["equipmentType"],
+                                  studentID: equipmentDataSnapshot.data!.snapshot!.value[index]["studentID"],
+                                  takenOn: DateTime.parse(equipmentDataSnapshot.data!.snapshot!.value[index]["takenOn"]),
+                                  equipmentImageName: equipmentDataSnapshot.data!.snapshot!.value[index]["equipmentImageName"],
+                                  scanID: equipmentDataSnapshot.data!.snapshot!.value[index]["scanID"],
+                                  categoryID: equipmentDataSnapshot.data!.snapshot!.value[index]["categoryID"],
+                                  doorNo: equipmentDataSnapshot.data!.snapshot!.value[index]["doorNo"]
+                                  ) ;
+                                  log("Equipment: $currEquipment");
 
-                              // var currEquipment= Equipment.fromJson(snapshot1.data.snapshot.value.values.elementAt(index)).toString();
+                                  // var currEquipment= Equipment.fromJson(equipmentDataSnapshot.data.snapshot.value.values.elementAt(index)).toString();
 
-                              return FutureBuilder(
-                              future: getEquipmentsImageDownloadUrl("equipmentImages",currEquipment.equipmentImageName),
-                              builder: (context, snapshot2) {
-                              if(snapshot2.hasData){
-                              log("check future builder: ${snapshot2.data}");
-                              currEquipment.equipmentImageName=snapshot2.data.toString();
-                              if(snapshot2.connectionState ==ConnectionState.waiting){
-                              return const Center(
-                              child: CircularProgressIndicator(color: Color(0xffc9a697)),
-                              );
-                              }
-                              else if(snapshot2.connectionState ==ConnectionState.active){
-                              return Container(
+                                  return FutureBuilder(
+                                    future: getEquipmentsImageDownloadUrl("equipmentImages",currEquipment.equipmentImageName),
+                                    builder: (context, equipmentImageSnapshot) {
+                                    if(equipmentImageSnapshot.hasData){
+                                      log("check future builder: ${equipmentImageSnapshot.data}");
+                                      currEquipment.equipmentImageName=equipmentImageSnapshot.data.toString();
+                                      if(equipmentImageSnapshot.connectionState ==ConnectionState.waiting){
+                                        return const Center(
+                                        child: CircularProgressIndicator(color: Color(0xff343148)),
+                                        );
+                                      }
+                                      else if(equipmentImageSnapshot.connectionState ==ConnectionState.active){
+                                        return Container(
+                                          margin: const EdgeInsets.only(left:10.0,right:10,bottom: 20),
+                                          child: EquipmentListItem(equipment: currEquipment),
+                                        );
+                                        // return CircularProgressIndicator();
+                                      }
+                                      else if(equipmentImageSnapshot.connectionState ==ConnectionState.done){
+                                        return Container(
+                                          margin: const EdgeInsets.only(left:10.0,right:10),
+                                          padding: const EdgeInsets.only(bottom:10),
+                                          child: EquipmentListItem(equipment: currEquipment),
+                                        );
+                                      }
+                                      else{
+                                        return const Center(child: CircularProgressIndicator());
+                                      }
 
-                              margin: const EdgeInsets.only(left:10.0,right:10,bottom: 20),
-                              child: EquipmentListItem(equipment: currEquipment),
-                              );
-                              // return CircularProgressIndicator();
-                              }
-                              else if(snapshot2.connectionState ==ConnectionState.done){
-                              return Container(
-
-                              margin: const EdgeInsets.only(left:10.0,right:10),
-                              padding: const EdgeInsets.only(bottom:10),
-                              child: EquipmentListItem(equipment: currEquipment),
-                              );
-                              }
-                              else{
-                              return const Center(child: CircularProgressIndicator());
-                              }
-
-                              }
-                              else{
-                              return const Center(
-
-                              child: CircularProgressIndicator()
-                              );
-                              }
-
-
-                              }
-                              );
-                              }
-                              else{
-                                return const SizedBox(width:0, height:0);
-                              }
+                                    }
+                                    else{
+                                      return const Center(
+                                          child: CircularProgressIndicator()
+                                      );
+                                    }
+                                    }
+                                  );
+                                }
+                                else{
+                                  return const SizedBox(width:0, height:0);
+                                }
                             })
                           );
                         }
-                        else if(snapshot1.connectionState ==ConnectionState.done){
+                        else if(equipmentDataSnapshot.connectionState ==ConnectionState.done){
                           log("Done State");
                           return Container();
                         }
@@ -463,6 +455,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   getEquipmentData(String collection) {
+    getUser(uid: Globals.userCredential.user!.uid);
     log("hit on data fetch");
     setState(() {
       equipmentData=FirebaseDatabase.instance
@@ -473,6 +466,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     });
     return equipmentData;
+  }
+
+  void getUser({required String uid}){
+    studentsRef.once().then((studentListNodeEvent) {
+      log("Student fetching started");
+      // fetched current logged in student from uid taken from sign in and get the whole student node under that uid
+      // store it as an Student object
+      var currentStudentQuery = studentListNodeEvent.snapshot.children
+          .singleWhere((studentElement) =>
+      Student
+          .fromJson(studentElement.value as Map)
+          .uid == Globals.userCredential.user!.uid
+      );
+
+      Globals.currentlySignedInStudentSnapshot=currentStudentQuery;
+
+
+    });
   }
 
 

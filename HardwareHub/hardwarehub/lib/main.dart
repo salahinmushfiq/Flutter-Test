@@ -5,7 +5,6 @@ import '/routes/routes.dart';
 import '/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 // Import the firebase_app_check plugin
 // import 'package:firebase_app_check/firebase_app_check.dart';
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             // primary: Colors.deepOrangeAccent,
-              primary: const Color(0xffe3dbd3),
+              backgroundColor: const Color(0xffe3dbd3),
               elevation: 5.0,
               side: const BorderSide(width: 2.0, color: Color(0xffa17e66))
           ),
@@ -52,9 +51,9 @@ class MyApp extends StatelessWidget {
 
         colorScheme: const ColorScheme(
           primary: Color(0xffa17e66), //button,appbar backgroundcolor
-          primaryVariant: Colors.orange,
+          primaryContainer: Colors.orange,
           secondary: Colors.green,
-          secondaryVariant: Colors.lightGreen,
+          secondaryContainer: Colors.lightGreen,
           surface: Colors.purple,
           background: Colors.indigo,
           error: Colors.red, //button,appbar color
@@ -65,20 +64,20 @@ class MyApp extends StatelessWidget {
           onError: Colors.red,
           brightness: Brightness.light,
         ),
-        textTheme:  const TextTheme(
-          headline1: TextStyle(fontSize: 20,color: Color(0xffa17e66),fontWeight: FontWeight.w700),
-          headline2: TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w800),
-          headline3: TextStyle(color: Color(0xffc9a697)),
-          headline4: TextStyle(color: Color(0xffc9a697)),
-          headline5: TextStyle(color: Color(0xffc9a697)),
-          headline6: TextStyle(color: Color(0xffc9a697)),
-          subtitle1: TextStyle(),
-          subtitle2: TextStyle(),
-          bodyText1: TextStyle(color: Color(0xffc9a697)),
-          bodyText2: TextStyle(color: Color(0xffc9a697)),
-          button: TextStyle(color: Color(0xffc9a697)),
-          caption: TextStyle(),
-          overline: TextStyle(color: Color(0xffc9a697)),
+        textTheme:   const TextTheme(
+          displayLarge: TextStyle(fontSize: 20,color: Color(0xffa17e66),fontWeight: FontWeight.w700),
+          displayMedium:  TextStyle(color: Color(0xffc9a697),fontWeight: FontWeight.w800),
+          displaySmall:  TextStyle(color: Color(0xffc9a697)),
+          headlineMedium: TextStyle(color: Color(0xffc9a697)),
+          headlineSmall: TextStyle(color: Color(0xffc9a697)),
+          titleLarge: TextStyle(color: Color(0xffc9a697)),
+          titleMedium: TextStyle(),
+          titleSmall: TextStyle(),
+          bodyLarge: TextStyle(color: Color(0xffc9a697)),
+          bodyMedium: TextStyle(color: Color(0xffc9a697)),
+          labelLarge: TextStyle(color: Color(0xffc9a697)),
+          bodySmall: TextStyle(),
+          labelSmall: TextStyle(color: Color(0xffc9a697)),
 
         ),
       ),

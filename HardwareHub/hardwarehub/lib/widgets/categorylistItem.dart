@@ -26,7 +26,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
             BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(
-                  widget.category.categoryImage!,
+                  widget.category.categoryImage,
                 ),
                 fit: BoxFit.cover,
 

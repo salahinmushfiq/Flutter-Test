@@ -28,11 +28,14 @@ class _ReceiveEquipmentBottomSheetState extends State<ReceiveEquipmentBottomShee
 
   DatabaseReference equipmentsRef = FirebaseDatabase.instance.ref("equipments");
   DatabaseReference studentsRef = FirebaseDatabase.instance.ref("students");
+  DatabaseReference studentScanReqRef = FirebaseDatabase.instance.ref("studentIdScanReqFlag");
+  DatabaseReference currentStudentScanIDRef = FirebaseDatabase.instance.ref("currentStudentScanID");
+  DatabaseReference doorNoRef = FirebaseDatabase.instance.ref("doorNo");
 
   var scanIdSnackBarContent = const SnackBar(backgroundColor: Color(0xff343148),
       content: Text("Scan your Id",
           style: TextStyle(color: Color(0xffe3dbd3))),
-      duration: Duration(seconds: 5),
+      // duration: Duration(seconds: 5),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10))),
       behavior: SnackBarBehavior.floating,
@@ -50,9 +53,10 @@ class _ReceiveEquipmentBottomSheetState extends State<ReceiveEquipmentBottomShee
   behavior: SnackBarBehavior.floating,
   margin: EdgeInsets.all(30.0),
   elevation: 2,
-  duration: Duration(seconds: 5),dismissDirection: DismissDirection.startToEnd);
+  // duration: Duration(seconds: 5),
+  dismissDirection: DismissDirection.startToEnd);
   var idMatchSuccessfulSnackBarContent = const SnackBar(backgroundColor: Color(0xff343148),
-  duration: Duration(seconds: 1),
+  // duration: Duration(seconds: 1),
   content: Text("ID matched.Scan Successful!",
   style: TextStyle(color: Color(0xffe3dbd3))),
   shape: RoundedRectangleBorder(
@@ -234,106 +238,108 @@ class _ReceiveEquipmentBottomSheetState extends State<ReceiveEquipmentBottomShee
     ): const SizedBox(height: 0,width:0);
   }
   setEquipmentsData() async {
-    var snackbar = ScaffoldMessenger.of( context);
+    var snackBar = ScaffoldMessenger.of( context);
       try {
-        DatabaseReference scanReqRef = FirebaseDatabase.instance.ref("scanReq");
-        scanReqRef.set(true);
-          studentsRef.once().then((event) {
-            log("Student fetching started");
-            var currentStudentQuery=event.snapshot.children.singleWhere((element) =>
 
-                Student.fromJson(element.value as Map).uid==Globals.userCredential.user!.uid
-            );
-            
-            Student currStudent=Student.fromJson(currentStudentQuery.value as Map);
-            var currStudentKey=currentStudentQuery.key;
-            log("Student Name: ${currStudent.name} Key:${currStudentKey.toString()}");
+        studentScanReqRef.set(true);
+        Student currStudent=Student.fromJson(Globals.currentlySignedInStudentSnapshot.value as Map);
+        var currStudentKey=Globals.currentlySignedInStudentSnapshot.key;
+        log("Student Name: ${currStudent.name} Key:${currStudentKey.toString()}");
 
-            equipmentsRef.once().then((event) {
-              setState(() {
-                widget._showReceiveEquipmentBottomSheet = false;
-              });
-              log("Equipment fetching started");
-
-              // searching for selected equipment in snapshot(equipments node) each children (equipment) by the unique equipment name
-
-              //node value where selected equipment exist
-              var selectedEquipmentQuery=event.snapshot.children.singleWhere((element) =>
-                Equipment.fromJson(element.value as Map).equipmentName==widget.currentlySelectedEquipments.equipmentName
-              );
-              //node key where selected equipment exist
-              var currEquipmentKey=event.snapshot.children.singleWhere((element) =>
-                Equipment.fromJson(element.value as Map).equipmentName==widget.currentlySelectedEquipments.equipmentName
-              ).key;
-
-              log(selectedEquipmentQuery.value.toString());
-              
-              Equipment currEquipment=Equipment.fromJson(selectedEquipmentQuery.value as Map);
-              log("Equipment Name: ${currEquipment.equipmentName} Equipment Key: ${currEquipmentKey.toString()}");
-              DatabaseReference currentScanIDRef = FirebaseDatabase.instance.ref("currentScanID");
-              DatabaseReference doorOpenReqRef = FirebaseDatabase.instance.ref("doorOpenReq");
-
-              currentScanIDRef.onValue.listen((event) async {
-                log("currentScanIDOnFirebase: ${event.snapshot.value}");
-
-                  if (event.snapshot.value != ""){
-
-                      if (event.snapshot.value.toString() == currStudent.scanID) {
-                      var time = DateTime.now();
-                      DatabaseReference currentEquipmentRef = FirebaseDatabase
-                        .instance.ref("equipments/$currEquipmentKey");
-                      DatabaseReference currentStudentRef = FirebaseDatabase
-                        .instance.ref("students/$currStudentKey");
-                      currEquipment.availability = false;
-                      currEquipment.takenOn = time;
-                      currEquipment.studentID = currStudent.studentID;
-                      currStudent.equipmentID = currEquipment.equipmentID;
-
-
-                      currStudent.equipmentID = currEquipment.equipmentID;
-                      scanReqRef.set(false).whenComplete(() {
-
-                        log("ScanReq Flag reset successful");
-                        currentEquipmentRef.update(currEquipment.toJson())
-                          .whenComplete(() {
-
-                          log("Equipment Node Successfully updated");
-                          currentScanIDRef.set("").whenComplete(() {
-                            log("CurrentScanID reset successful");
-                            currentStudentRef.update(currStudent.toJson())
-                              .whenComplete(() {
-                              doorOpenReqRef.set(currEquipment.doorNo).whenComplete(() {
-                                log("Current Student Data update successful");
-                                snackbar.hideCurrentSnackBar();
-                                snackbar.showSnackBar(idMatchSuccessfulSnackBarContent);
-                              });
-
-                                }).catchError((e) => log( "Current Student Data update failed because $e"));
-                          }).catchError((e) => log("CurrentScanID reset failed"));
-                      }).catchError((e) =>log("Equipment Node failed because: $e"));
-                    }).catchError((e) =>log("ScanReq Flag reset failed because: $e"));
-                  }
-                      else{
-                        currentScanIDRef.set("").whenComplete(() {
-                          snackbar.hideCurrentSnackBar();
-                          snackbar.showSnackBar(
-                              scanIdDidntMatchSnackBarContent
-                              );
-                        });
-
-                      }
-
-                  }
-                  else{
-                    snackbar.hideCurrentSnackBar();
-                    snackbar.showSnackBar(
-                        scanIdSnackBarContent
-                    );
-                  }
-                });
-
-            });
+        equipmentsRef.once().then((equipmentsEvent) {
+          setState(() {
+            widget._showReceiveEquipmentBottomSheet = false;
           });
+          log("Equipment fetching started");
+          DataSnapshot equipmentsDataSnapshot=equipmentsEvent.snapshot;
+          // searching for selected equipment in snapshot(equipments node) each children (equipment) by the unique equipment name
+
+          //node value where selected equipment exist
+          log(equipmentsDataSnapshot.children.toString());
+          if(equipmentsDataSnapshot.children.singleWhere((equipmentDataSnapshot) =>
+          Equipment.fromJson(equipmentDataSnapshot.value as Map).equipmentName==widget.currentlySelectedEquipments.equipmentName
+          ).exists){
+            var selectedEquipmentQuery=equipmentsDataSnapshot.children.singleWhere((equipmentDataSnapshot) =>
+            Equipment.fromJson(equipmentDataSnapshot.value as Map).equipmentName==widget.currentlySelectedEquipments.equipmentName
+            );
+            //node key where selected equipment exist
+            var currEquipmentKey=equipmentsDataSnapshot.children.singleWhere((equipmentDataSnapshot) =>
+            Equipment.fromJson(equipmentDataSnapshot.value as Map).equipmentName==widget.currentlySelectedEquipments.equipmentName
+            ).key;
+
+            log(selectedEquipmentQuery.value.toString());
+
+            Equipment currEquipment=Equipment.fromJson(selectedEquipmentQuery.value as Map);
+            log("Equipment Name: ${currEquipment.equipmentName} Equipment Key: ${currEquipmentKey.toString()}");
+
+
+            currentStudentScanIDRef.onValue.listen((currentStudentScanIDEvent) async {
+              log("currentScanIDOnFirebase: ${currentStudentScanIDEvent.snapshot.value}");
+              DataSnapshot currentStudentIDDataSnapshot=currentStudentScanIDEvent.snapshot;
+              if (currentStudentIDDataSnapshot.value != ""){
+
+                if (currentStudentIDDataSnapshot.value.toString() == currStudent.scanID) {
+                  var time = DateTime.now();
+                  DatabaseReference currentEquipmentRef = FirebaseDatabase
+                      .instance.ref("equipments/$currEquipmentKey");
+                  DatabaseReference currentStudentRef = FirebaseDatabase
+                      .instance.ref("students/$currStudentKey");
+                  currEquipment.availability = false;
+                  currEquipment.takenOn = time;
+                  currEquipment.studentID = currStudent.studentID;
+                  currStudent.equipmentID = currEquipment.equipmentID;
+
+
+                  currStudent.equipmentID = currEquipment.equipmentID;
+                  studentScanReqRef.set(false).whenComplete(() {
+
+                    log("ScanReq Flag reset successful");
+                    currentEquipmentRef.update(currEquipment.toJson())
+                        .whenComplete(() {
+
+                      log("Equipment Node Successfully updated");
+                      currentStudentScanIDRef.set("").whenComplete(() {
+                        log("CurrentScanID reset successful");
+                        currentStudentRef.update(currStudent.toJson())
+                            .whenComplete(() {
+                          doorNoRef.set(currEquipment.doorNo).whenComplete(() {
+                            log("Current Student Data update successful");
+                            snackBar.hideCurrentSnackBar();
+                            snackBar.showSnackBar(idMatchSuccessfulSnackBarContent);
+                          });
+
+                        }).catchError((e) => log( "Current Student Data update failed because $e"));
+                      }).catchError((e) => log("CurrentScanID reset failed"));
+                    }).catchError((e) =>log("Equipment Node failed because: $e"));
+                  }).catchError((e) =>log("ScanReq Flag reset failed because: $e"));
+                }
+                else{
+                  currentStudentScanIDRef.set("").whenComplete(() {
+                    snackBar.hideCurrentSnackBar();
+                    snackBar.showSnackBar(
+                        scanIdDidntMatchSnackBarContent
+                    );
+                  });
+
+                }
+
+              }
+              else{
+                snackBar.hideCurrentSnackBar();
+                snackBar.showSnackBar(
+                    scanIdSnackBarContent
+                );
+              }
+            });
+          }else{
+            log("No such element exists on database");
+          }
+
+
+        }).onError((error, stackTrace){
+          log("Equipments couldn't be fetched");
+        });
+
 
 
       }on Exception catch (e) {

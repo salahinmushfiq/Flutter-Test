@@ -206,7 +206,7 @@ class _EquipmentssScreenBottomSheetsState extends State<EquipmentssScreenBottomS
                               width:120,
                               color:Colors.blue,
                               child:
-                              Image(image: NetworkImage(widget.currentlySelectedEquipments.equipmentImageName!),fit: BoxFit.cover,)
+                              Image(image: NetworkImage(widget.currentlySelectedEquipments.equipmentImageName),fit: BoxFit.cover,)
                           ),
                           Container(
 

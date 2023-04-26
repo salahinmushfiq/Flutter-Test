@@ -169,7 +169,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   _passwordVisible
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: Theme.of(context).primaryColorDark,
+                                  color: const Color(0xffa17e66),
                                 ),
                                 onPressed: () =>
                                   // Update the state i.e. toogle the state of passwordVisible variable
