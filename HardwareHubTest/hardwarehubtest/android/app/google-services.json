@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "50182814659",
+    "firebase_url": "https://smartlabtest-71fa7-default-rtdb.firebaseio.com",
+    "project_id": "smartlabtest-71fa7",
+    "storage_bucket": "smartlabtest-71fa7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50182814659:android:439cb861ea019aad6e1b76",
+        "android_client_info": {
+          "package_name": "com.example.hardwarehubtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50182814659-8mblpmq7km40996013554ts8q3e62569.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC63dbwgAA7Eb2_5UkWdrreygeBODgfmE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50182814659-8mblpmq7km40996013554ts8q3e62569.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "50182814659-n6k6mb9ftmlr562a9irmmasoslhnt1ed.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hardwarehubhest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
