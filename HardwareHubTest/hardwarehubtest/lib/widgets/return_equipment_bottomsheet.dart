@@ -97,6 +97,16 @@ class _ReturnEquipmentBottomSheetState extends State<ReturnEquipmentBottomSheet>
       behavior: SnackBarBehavior.floating,
       margin: EdgeInsets.all(30.0),
       elevation: 2);
+  var equipmentReturnedSuccessfulSnackBarContent = const SnackBar(backgroundColor: Color(0xff343148),
+      duration: Duration(seconds: 1),
+      content: Text("Equipment Successfully Returned!.",
+          style: TextStyle(color: Color(0xffe3dbd3))),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+              Radius.circular(10))),
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.all(30.0),
+      elevation: 2);
   late StreamSubscription currentEquipmentScanStreamSub;
   @override
   Widget build(BuildContext context) {
@@ -225,19 +235,7 @@ class _ReturnEquipmentBottomSheetState extends State<ReturnEquipmentBottomSheet>
                       ),
                       onPressed: () async {
                         // widget._showReturnEquipmentBottomSheet=false;
-                        await setEquipmentsData(snackbar:snackbar);
-                        if(widget.scanSuccessful==true) {
-
-                          setState(() {
-                            widget.scanSuccessful == false;
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                                backgroundColor: Color(0xff343148),
-                                content: Text("ID scan Matched.")));
-                          });
-
-                        }
-
+                        await setData(snackbar:snackbar);
                       }, child: const Text("Proceed",style: TextStyle(color: Colors.green)),
                     ),
                   )
@@ -249,7 +247,7 @@ class _ReturnEquipmentBottomSheetState extends State<ReturnEquipmentBottomSheet>
         )
     ): const SizedBox(height: 0,width:0);
   }
-  setEquipmentsData({required ScaffoldMessengerState snackbar}) async {
+  setData({required ScaffoldMessengerState snackbar}) async {
     
     try {
       // after sign in all this page gets an uid. it needs to get a student using the uid
@@ -293,11 +291,18 @@ class _ReturnEquipmentBottomSheetState extends State<ReturnEquipmentBottomSheet>
 
           if(currEquipment.waitingIDList.isNotEmpty){
             if(!currEquipment.waitingIDList.contains("")){
-              currEquipment.waitingIDList.remove(currEquipment.waitingIDList.first);
+
+              currEquipment.availability=true;
               currEquipment.studentID=currEquipment.waitingIDList.first;
+              currEquipment.waitingIDList.remove(currEquipment.waitingIDList.first);
+              currStudent.equipmentID="";
               DatabaseReference currentEquipmentRef = FirebaseDatabase
                   .instance.ref("equipments/$currEquipmentKey");
+              DatabaseReference currentStudentRef = FirebaseDatabase
+                  .instance.ref("equipments/$currStudentKey");
               currentEquipmentRef.update(currEquipment.toJson());
+              currentEquipmentRef.update(currStudent.toJson());
+              snackbar.showSnackBar(equipmentReturnedSuccessfulSnackBarContent);
             }
           }
           // Listen for value update on StudentScan Node which fires after every scan on student ID reader
