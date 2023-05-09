@@ -92,6 +92,7 @@ class TestBottomBarState extends State<BottomBar> {
           color: const Color(0xffD7C49E),
           child: Column(
             children: [
+              const SizedBox(height:50),
                 const CircleAvatar(
                 radius: 50,
                 foregroundImage: AssetImage("assets/images/profile_pic.jpeg"),
@@ -127,20 +128,6 @@ class TestBottomBarState extends State<BottomBar> {
                     ),
                     ),
                     const Divider(color: Color(0xff343148),thickness: 1),
-                    Expanded(
-                      child: InkWell(
-                        onTap: (){},
-                        child: Container(
-                          color:const Color(0xffD7C49E),
-                          alignment: Alignment.center,
-                          width:double.infinity,
-                          child: const Text("Offers",style: TextStyle(color:Color(0xff343148),fontWeight: FontWeight.w800 ),),
-                        ),
-
-                      ),
-                    ),
-                    // const Divider(color: Color(0xff4465aa),thickness: 1,),
-                    const Divider(color: Color(0xffc9a697),thickness: 1,),
                     Expanded(
                       child: InkWell(
                         splashColor: const Color(0xffc9a697),

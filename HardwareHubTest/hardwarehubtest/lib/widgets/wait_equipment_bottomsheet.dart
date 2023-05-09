@@ -131,7 +131,6 @@ class _WaitEquipmentBottomSheetState extends State<WaitEquipmentBottomSheet> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children:
                     [
-
                       Container(
                         margin: const EdgeInsets.only(left:12),
                         decoration: BoxDecoration(
@@ -197,7 +196,6 @@ class _WaitEquipmentBottomSheetState extends State<WaitEquipmentBottomSheet> {
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -243,15 +241,10 @@ class _WaitEquipmentBottomSheetState extends State<WaitEquipmentBottomSheet> {
                         // });
                         await setEquipmentsData();
 
-                              setState(() {
-                                widget.scanSuccessful == false;
-                                ScaffoldMessenger.of(context)
+                              ScaffoldMessenger.of(context)
                                     .showSnackBar(const SnackBar(
                                     backgroundColor: Color(0xff343148),
-                                    content: Text("Added to .")));
-                              });
-
-
+                                    content: Text("Added to the queue")));
 
                       }, child: const Text("Wait",style: TextStyle(color: Color(0xffF5A623))),
                     ),
@@ -309,9 +302,9 @@ class _WaitEquipmentBottomSheetState extends State<WaitEquipmentBottomSheet> {
 
               if(!currEquipment.waitingIDList.contains("")){
                 currEquipment.waitingIDList.add(currStudent.studentID);
-                log("ScanReq Flag reset successful");
+                currEquipment.availableOn= currEquipment.availableOn.add(Duration(days: currEquipment.waitingIDList.length-1*7));
                 currentEquipmentRef.update(currEquipment.toJson()).whenComplete(() {
-                  currEquipment.availableOn= currEquipment.availableOn.add(Duration(days: currEquipment.waitingIDList.length-1*7));
+
                   log("Equipment Node Successfully updated");
                   log("CurrentScanID reset successful");
                   currentStudentRef.update(currStudent.toJson())
@@ -324,10 +317,9 @@ class _WaitEquipmentBottomSheetState extends State<WaitEquipmentBottomSheet> {
               }else{
                 currEquipment.waitingIDList.insert(0,currStudent.studentID);
                 log("ScanReq Flag reset successful");
+                currEquipment.availableOn= currEquipment.availableOn.add(Duration(days: currEquipment.waitingIDList.length-1*7));
                 currentEquipmentRef.update(currEquipment.toJson()).whenComplete(() {
-                  currEquipment.availableOn= currEquipment.availableOn.add(Duration(days: currEquipment.waitingIDList.length-1*7));
                   log("Equipment Node Successfully updated");
-                  log("CurrentScanID reset successful");
                   currentStudentRef.update(currStudent.toJson())
                       .whenComplete(() {
                     doorNoRef.set(currEquipment.doorNo).whenComplete(() {

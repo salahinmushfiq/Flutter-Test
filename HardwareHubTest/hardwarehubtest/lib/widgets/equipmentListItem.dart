@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/widgets.dart';
 import 'package:hardwarehubtest/widgets/wait_equipment_bottomsheet.dart';
 import '../models/Equipment.dart';
@@ -104,7 +103,6 @@ class _EquipmentListItemState extends State<EquipmentListItem> {
                   ):Text("Available in ${widget.equipment.availableOn.difference(DateTime.now()).inDays} Days",
                       style: const TextStyle(color: Color(0xffF5A623),fontWeight: FontWeight.w800)
                   ),
-
                 ],
               ),
             ),

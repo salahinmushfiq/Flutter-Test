@@ -176,7 +176,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         child: Container(
 
-          color: const Color(0xffe3dbd3),
+          color: const Color(0xffD7C49E),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

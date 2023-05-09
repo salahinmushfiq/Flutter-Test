@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:firebase_database/firebase_database.dart';
-
 import '../globals.dart';
 import '../models/Student.dart';
 import '/models/Equipment.dart';
@@ -15,7 +13,7 @@ class ReturnEquipmentBottomSheet extends StatefulWidget {
   bool _showReturnEquipmentBottomSheet=true;
   bool scanSuccessful=false;
 
-  ReturnEquipmentBottomSheet({required this.currentlyClickedEquipment});
+  ReturnEquipmentBottomSheet({super.key, required this.currentlyClickedEquipment});
 
   @override
   State<ReturnEquipmentBottomSheet> createState() => _ReturnEquipmentBottomSheetState();
@@ -56,7 +54,7 @@ class _ReturnEquipmentBottomSheetState extends State<ReturnEquipmentBottomSheet>
       dismissDirection: DismissDirection.startToEnd
 
   );
-  var studentIdDidnotMatchSnackBarContent = const SnackBar(backgroundColor: Color(0xff343148),
+  var studentIdDidNotMatchSnackBarContent = const SnackBar(backgroundColor: Color(0xff343148),
       content: Text("ID Didn't match. Use the correct ID!",
           style: TextStyle(color: Color(0xffe3dbd3))),
       shape: RoundedRectangleBorder(
@@ -288,7 +286,10 @@ class _ReturnEquipmentBottomSheetState extends State<ReturnEquipmentBottomSheet>
           log("Equipment Name: ${currEquipment.equipmentName} Equipment Key: ${currEquipmentKey.toString()}");
 
           // equipmentIdScanReqFlagRef.set(true);
-
+          DatabaseReference currentEquipmentRef = FirebaseDatabase
+              .instance.ref("equipments/$currEquipmentKey");
+          DatabaseReference currentStudentRef = FirebaseDatabase
+              .instance.ref("equipments/$currStudentKey");
           if(currEquipment.waitingIDList.isNotEmpty){
             if(!currEquipment.waitingIDList.contains("")){
 
@@ -296,14 +297,27 @@ class _ReturnEquipmentBottomSheetState extends State<ReturnEquipmentBottomSheet>
               currEquipment.studentID=currEquipment.waitingIDList.first;
               currEquipment.waitingIDList.remove(currEquipment.waitingIDList.first);
               currStudent.equipmentID="";
-              DatabaseReference currentEquipmentRef = FirebaseDatabase
-                  .instance.ref("equipments/$currEquipmentKey");
-              DatabaseReference currentStudentRef = FirebaseDatabase
-                  .instance.ref("equipments/$currStudentKey");
+
               currentEquipmentRef.update(currEquipment.toJson());
-              currentEquipmentRef.update(currStudent.toJson());
+              currentStudentRef.update(currStudent.toJson());
+              snackbar.showSnackBar(equipmentReturnedSuccessfulSnackBarContent);
+            }else if(currEquipment.waitingIDList.contains("")) {
+              currEquipment.availability=true;
+              currEquipment.waitingIDList.insert(0,currEquipment.waitingIDList.first);
+              currEquipment.studentID=currEquipment.waitingIDList.first;
+              currEquipment.availableOn=currEquipment.availableOn.subtract(const Duration(days: 7));
+              currStudent.equipmentID="";
+
+              currentEquipmentRef.update(currEquipment.toJson());
+              currentStudentRef.update(currStudent.toJson());
               snackbar.showSnackBar(equipmentReturnedSuccessfulSnackBarContent);
             }
+          }else{
+            currEquipment.availability=true;
+            currEquipment.studentID="";
+            currStudent.equipmentID="";
+            currentEquipmentRef.update(currEquipment.toJson());
+            currentStudentRef.update(currStudent.toJson());
           }
           // Listen for value update on StudentScan Node which fires after every scan on student ID reader
 

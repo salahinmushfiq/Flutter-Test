@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hardwarehubtest">
    <application
-        android:label="hardwarehubtest"
+        android:label="H/W Hub"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
