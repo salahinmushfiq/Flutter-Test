@@ -67,11 +67,6 @@ Copy code
 - Building reactive UI with StreamBuilder + FutureBuilder.
 - Managing IoT hardware inventory and automating lab workflows.
 
----
-
-## 🚀 Live Demo / Screenshots
-
-*(Optional: You can add screenshots or a video GIF of your app here to make it visually appealing)*
 
 ---
 
@@ -79,7 +74,8 @@ Copy code
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/salahinmushfiq/Flutter-Test
+
 Install dependencies:
 
 bash
