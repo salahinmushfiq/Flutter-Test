@@ -121,8 +121,8 @@ Wishlist feature
 
 Mushfiq Us Salahin
 
-GitHub: https://github.com/your-profile
-Portfolio: https://your-portfolio.com
+GitHub:[https://github.com/salahinmushfiq](https://github.com/salahinmushfiq)
+Portfolio: [https://ngsoftworks.netlify.app/](https://ngsoftworks.netlify.app/)
 ⭐ Final Note
 
 This project demonstrates:
