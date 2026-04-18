@@ -100,8 +100,8 @@ category\_images/
 product\_images/
 
 ⚙️ How to Run
-git clone https://github.com/your-username/flutter-ecommerce-app.git
-cd flutter-ecommerce-app
+git clone https://github.com/salahinmushfiq/Flutter-Test.git
+cd Flutter-Test
 flutter pub get
 flutter run
 
@@ -121,8 +121,8 @@ Wishlist feature
 
 Mushfiq Us Salahin
 
-GitHub:[https://github.com/salahinmushfiq](https://github.com/salahinmushfiq)
-Portfolio: [https://ngsoftworks.netlify.app/](https://ngsoftworks.netlify.app/)
+GitHub:https://github.com/salahinmushfiq
+Portfolio:https://ngsoftworks.netlify.app
 ⭐ Final Note
 
 This project demonstrates:
